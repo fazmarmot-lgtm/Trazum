@@ -2,7 +2,11 @@
 
 ## ¿Qué puedo ver durante la demo?
 
-El dedo impreso que probamos sobre una mesa. Podemos mover sus tres articulaciones y mostrar el recorrido de cada una.
+El dedo impreso que probamos sobre una mesa. Se pueden mover sus tres articulaciones y mostrar el recorrido de cada una.
+
+## ¿Qué aporta el prototipo actual?
+
+Podemos cambiar una pieza y repetir la prueba de movimiento con el dedo armado. Así podemos comparar cambios sobre un objeto físico antes de integrar cinco dedos.
 
 ## ¿La mano completa ya funciona?
 
@@ -10,7 +14,7 @@ El avance físico que presentamos es el dedo. La mano compacta existe como dise�
 
 ## ¿Qué midieron hasta ahora?
 
-La prueba física fue manual. Observamos si las piezas se podían armar y desarmar y si las articulaciones se movían. La próxima prueba de mesa medirá el esfuerzo y el recorrido a lo largo de varios ciclos.
+La prueba física fue manual. Observamos cómo se armaba, se movía y se desarmaba el dedo. En el modelo revisamos configuraciones para buscar choques entre piezas. La próxima prueba de mesa medirá el esfuerzo y el recorrido a lo largo de varios ciclos.
 
 ## ¿Qué muestra esto sobre la escritura?
 

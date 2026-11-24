@@ -1,25 +1,21 @@
 # Trazum
 
-Trazum es un proyecto que explora cómo la tecnología puede ayudar a escribir a mano cuando sostener o mover un lápiz cuesta.
+**Un prototipo de mesa para investigar cómo apoyar la escritura a mano.** Trazum parte de una dificultad concreta. Sostener y guiar un lápiz puede exigir mucho esfuerzo, incluso antes de empezar a trazar una letra.
 
-El primer avance es un dedo articulado impreso en 3D. Tiene **6 piezas y 3 articulaciones**. En la prueba de mesa pudimos armarlo, mover cada articulación a mano y volver a desarmarlo.
+El primer avance es un dedo articulado impreso en 3D. Tiene **6 piezas y 3 articulaciones**. En la prueba de mesa pudimos armarlo, mover cada articulación a mano y volver a desarmarlo. Esto nos da un prototipo físico para comparar cambios.
 
-## Qué podemos mostrar
+## Estado del prototipo
 
-En una demo corta mostramos el prototipo físico armado y cómo se mueve. La demostración actual se hace sobre una mesa.
-
-| Etapa | Qué mostramos |
+| Etapa | Resultado |
 | --- | --- |
 | Prueba física | Un dedo impreso, armado y movido a mano sobre una mesa. |
-| Diseño digital | Un modelo de mano compacta de cinco dedos, con el armado físico completo aún pendiente. |
-| Siguiente experimento | Medir en banco cuánto esfuerzo y recorrido requiere mover el dedo de forma repetible. |
+| Revisión digital | 192 configuraciones del índice y 45 posturas de la mano compacta revisadas en el modelo. |
+| Próximo experimento | Registrar la fuerza y el recorrido del dedo durante varias repeticiones para comparar dos versiones. |
 
-El proyecto todavía no ha medido mejoras en la escritura.
+El armado físico de la mano completa y cualquier efecto sobre la escritura quedan por evaluar.
 
-## Para hackatones
+## Presentación para hackatones
 
-El desafío es pasar de un dedo que se mueve a un prototipo cuyo movimiento se pueda medir y repetir. Buscamos conversar con equipos de diseño, electrónica y accesibilidad para definir una prueba que permita comparar dos versiones.
-
-- [Guion para la demo de 90 segundos](DEMO.md)
-- [Ficha para inscripciones en español e inglés](PITCH.md)
-- [Preguntas del jurado](PREGUNTAS.md)
+- [Ficha para inscripciones](PITCH.md) con textos en español e inglés.
+- [Demostración y evidencia](DEMO.md) con el alcance de cada prueba.
+- [Preguntas del jurado](PREGUNTAS.md) sobre el proyecto y cómo se evaluaría.
