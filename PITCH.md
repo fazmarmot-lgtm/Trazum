@@ -2,24 +2,27 @@
 
 ## Español
 
-**En una frase.** Trazum explora cómo la tecnología puede ayudar a escribir a mano cuando sostener o mover un lápiz cuesta.
+Sostener y mover un lápiz puede requerir mucho esfuerzo antes de escribir la primera letra. Soy Lautaro Verón y empecé Trazum para investigar cómo un dispositivo articulado podría acompañar ese movimiento. La idea nació en una visita al Dámaso Centeno.
 
-**Descripción breve.** Trazum investiga cómo un dispositivo articulado podría acompañar los movimientos de la escritura. Ya construimos un dedo impreso en 3D con seis piezas y tres articulaciones. Lo armamos, movimos y desarmamos a mano en una prueba de mesa. También tenemos el diseño digital de una mano compacta.
-
-**Inspiración.** Nos preguntamos qué pasa antes de que una persona trace la primera letra, cuando sostener o mover el lápiz ya cuesta.
-
-**Avance previo.** Antes del evento ya teníamos el dedo impreso, la prueba manual de mesa y el modelo digital de la mano compacta.
-
-**Meta para el evento.** Definir una prueba de mesa repetible. Queremos comparar dos versiones por la fuerza necesaria para mover el dedo y el recorrido que alcanza.
+La demo pública compara dos recorridos virtuales bajo la misma perturbación sintética. Podés ver el movimiento en 3D, cambiar parámetros y repetir la prueba. En paralelo probé a mano un índice impreso sobre una mesa. El siguiente paso es registrar fuerza y recorrido para comparar versiones.
 
 ## English
 
-**One line.** Trazum explores how technology could support handwriting when holding or moving a pencil takes extra effort.
+Holding and moving a pencil can take effort before the first letter is written. I'm Lautaro Verón, and I started Trazum after a school visit where I learned about this difficulty. My goal is to investigate how an articulated device could support handwriting movements.
 
-**Short description.** Trazum investigates how an articulated device could support the movements used in handwriting. We built a 3D-printed finger with six pieces and three joints, then assembled, moved, and disassembled it by hand in a bench trial. We also have a digital model of a compact full hand.
+The public demo compares two virtual motions under the same synthetic disturbance. You can see the mechanism in 3D, change parameters, and repeat the test. I also bench-tested a 3D-printed index finger by moving it by hand. The next step is to measure force and travel across repeated trials.
 
-**Inspiration.** We started by asking what happens before the first letter is written, when holding or moving a pencil already takes effort.
+## STEM2Connect y Devpost
 
-**Work completed before the event.** A printed finger, a manual bench trial, and a digital model of the compact hand.
+| Campo | Texto o dato para la presentación |
+| --- | --- |
+| Track | **Education**. Investigación sobre barreras motrices en la escritura escolar. |
+| Antes del hackatón | **Por confirmar con el autor.** Identificar qué trabajo ya existía antes del 11 de octubre de 2026. Evitar presentar la impresión de noviembre o el simulador registrado el 29 de octubre como trabajo previo a esa fecha. |
+| Durante el período del hackatón | El registro del simulador de investigación es de octubre. El índice de mesa y la demo pública independiente corresponden a noviembre. Confirmar qué hitos formaron parte de la participación efectiva. |
+| Tecnologías | JavaScript, Three.js, Vite, Canvas 2D y pruebas con Node.js. |
+| Dificultad | Hacer una demostración que se pueda reproducir de forma independiente y que mantenga reservados los archivos de fabricación. |
+| Aprendizaje | Una observación de mesa ayuda a detectar problemas de armado y movimiento. El error de una simulación con objetivo conocido cumple otro propósito y no mide beneficio para estudiantes. |
+| IA | ChatGPT/Codex para programación y documentación, Claude y DeepSeek para revisión técnica. La demo ejecutable usa métodos matemáticos y no llama a un modelo de IA. |
+| Pendiente | Medir fuerza y recorrido, probar el armado de la mano completa y evaluar electrónica y sensado en banco. |
 
-**Goal for the event.** Define a repeatable bench test to compare two versions by how much force it takes to move the finger and how far it moves.
+Para enviar la candidatura, completar la cronología, enlazar el repositorio público y el video, y confirmar los integrantes y la autorización del adulto responsable si aplica. [Reglas oficiales](https://stem2connect-online-hackathon.devpost.com/rules) · [Guion](DEMO.md) · [Uso de IA](docs/USO_DE_IA.md)

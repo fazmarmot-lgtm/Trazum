@@ -1,25 +1,25 @@
 # Preguntas del jurado
 
-## ¿Qué puedo ver durante la demo?
+## ¿Qué puedo probar ahora?
 
-El dedo impreso que probamos sobre una mesa. Se pueden mover sus tres articulaciones y mostrar el recorrido de cada una.
+Una simulación pública de cuatro segundos. Podés cambiar la perturbación o la corrección, ver el movimiento del lápiz virtual en 3D y comparar los errores de dos recorridos. [Cómo reproducirla](DEMO.md)
 
-## ¿Qué aporta el prototipo actual?
+## ¿La corrección predice qué quiere escribir una persona?
 
-Podemos cambiar una pieza y repetir la prueba de movimiento con el dedo armado. Así podemos comparar cambios sobre un objeto físico antes de integrar cinco dedos.
+La demo conoce de antemano el recorrido y corrige una parte de la desviación. Se usa para ilustrar una comparación controlada. El reconocimiento de intención con sensores es una línea de trabajo futura.
 
-## ¿La mano completa ya funciona?
+## ¿Qué se probó físicamente?
 
-El avance físico que presentamos es el dedo. La mano compacta existe como diseño digital y su armado completo queda por probar.
+El desarrollador armó y movió a mano un índice de seis piezas en mesa. Es una observación cualitativa. El ensayo instrumental del dedo, el armado físico de la mano completa y la electrónica integrada quedan pendientes.
 
-## ¿Qué midieron hasta ahora?
+## ¿Se usan modelos de IA?
 
-La prueba física fue manual. Observamos cómo se armaba, se movía y se desarmaba el dedo. En el modelo revisamos configuraciones para buscar choques entre piezas. La próxima prueba de mesa medirá el esfuerzo y el recorrido a lo largo de varios ciclos.
+Se usaron asistentes de IA durante el desarrollo y la revisión. La demo ejecuta cinemática y cálculos deterministas. [Declaración de IA](docs/USO_DE_IA.md)
 
-## ¿Qué muestra esto sobre la escritura?
+## ¿Cómo van a evaluar el próximo prototipo?
 
-La prueba confirma que el dedo impreso se mueve a mano. Todavía falta investigar si un dispositivo basado en ese movimiento puede facilitar una tarea de escritura.
+Medir fuerza y recorrido durante varias repeticiones en mesa y registrar desgaste y juego. Antes de probar asistencia sobre una persona hace falta definir el protocolo de seguridad y evaluación.
 
-## ¿Con qué resultado quieren salir del hackatón?
+## ¿Cuándo se desarrolló?
 
-Con una prueba de banco que podamos repetir y usar para comparar dos versiones. El resultado que buscamos es un registro de fuerza y recorrido que nos ayude a decidir qué cambiar primero.
+El registro de desarrollo documenta etapas entre octubre y noviembre de 2026. La declaración para Devpost tiene marcados los hitos que todavía requieren confirmar su relación con la participación en el evento. [Cronología](docs/DESARROLLO.md) · [Ficha de Devpost](PITCH.md#stem2connect-y-devpost)

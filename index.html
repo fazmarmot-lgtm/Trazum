@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1322">
+<title>Trazum · Handwriting motion lab</title>
+</head>
+<body>
+<header><a class="brand" href="./">Trazum</a><a href="https://github.com/fazmarmot-lgtm/Trazum">Project on GitHub ↗</a></header>
+<main>
+<section class="intro"><h1>Handwriting motion lab</h1><p>Follow a loop with a virtual stylus. Compare the same synthetic disturbance with and without a correction toward the target.</p></section>
+<div class="workspace">
+<section class="stage" aria-labelledby="stage-title">
+<h2 id="stage-title">3D mechanism</h2><div id="viewport" role="img" aria-label="Articulated mechanism tracing a loop"></div>
+<p id="view-status" role="status">Drag to orbit. Scroll or pinch to zoom.</p>
+<div class="row cameras" aria-label="Camera controls"><button id="camera" type="button">Reset view</button><button id="zoom-in" type="button">Zoom in</button><button id="zoom-out" type="button">Zoom out</button></div>
+</section>
+<section class="controls" aria-labelledby="run-title">
+<h2 id="run-title">Run a comparison</h2>
+<label for="mode">Motion shown in 3D</label><select id="mode"><option value="baseline">Uncorrected</option><option value="guided">Target correction</option></select>
+<label for="noise">Synthetic disturbance <output id="noise-value" for="noise"></output></label><input id="noise" type="range" min="0" max="30" value="20">
+<label for="gain">Correction strength <output id="gain-value" for="gain"></output></label><input id="gain" type="range" min="0" max="100" value="65">
+<div class="row"><button type="button" class="primary" id="play">Run</button><button type="button" id="reset">Reset run</button></div>
+<label for="seek">Timeline <output id="time" for="seek"></output></label><input id="seek" type="range" min="0" max="120" value="0">
+<p class="note">The correction uses the known target path. Measurements use virtual units and describe a synthetic example.</p>
+</section>
+<section class="results" aria-labelledby="result-title">
+<h2 id="result-title">Trace comparison</h2><canvas id="trace" width="360" height="240" role="img" aria-label="Target, uncorrected, and corrected paths"></canvas>
+<ul class="legend"><li>Target</li><li>Uncorrected</li><li>Target correction</li></ul>
+<table><caption>Error over all 121 samples (virtual units)</caption><thead><tr><th scope="col">Error</th><th scope="col">Uncorrected</th><th scope="col">Corrected</th></tr></thead><tbody><tr><th scope="row">RMS</th><td id="baseline-rms"></td><td id="guided-rms"></td></tr><tr><th scope="row">Peak</th><td id="baseline-peak"></td><td id="guided-peak"></td></tr></tbody></table>
+</section>
+</div>
+<footer>Experimental simulation · Standalone public demonstration</footer>
+</main>
+<script type="module" src="./demo/main.js"></script>
+</body></html>

@@ -1,0 +1,42 @@
+* { box-sizing: border-box }
+:root { color-scheme: dark; font: 16px/1.55 system-ui, sans-serif; color: #edf4ff; background: #0b1322 }
+body { margin: 0 }
+a { color: #9ac8ff; text-underline-offset: 4px }
+header, main { max-width: 1310px; width: calc(100% - 64px); margin: auto }
+header { min-height: 64px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #28364b }
+.brand { font-size: 1.4rem; color: #f8fbff; font-weight: 750; text-decoration: none }
+.intro { padding-block: 30px 22px }
+h1, h2, p { margin: 0 }
+h1 { font-size: clamp(2.15rem, 5vw, 4rem); line-height: 1.03; letter-spacing: -0.045em; margin-bottom: 12px }
+h2 { font-size: 1.1rem }
+p, footer, caption { color: #bfcde3 }
+.workspace { display: grid; grid-template-columns: minmax(0, 2fr) minmax(245px, 1fr); gap: 14px }
+.workspace > section { min-width: 0; background: #121d2f; border: 1px solid #2d3e59; border-radius: 12px; padding: 16px }
+.stage { grid-row: span 2 }
+#viewport { height: clamp(270px, 42vw, 520px); margin-top: 12px; border-radius: 8px; overflow: hidden }
+#viewport canvas { display: block }
+#view-status, .note { font-size: .83rem; margin-top: 10px }
+label { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; font-size: .9rem }
+output { color: #a9d0ff; font-variant-numeric: tabular-nums }
+button, select { font: inherit; color: inherit; background: #1b2a43; border: 1px solid #435d81; padding: 7px 12px; border-radius: 6px; min-height: 40px }
+button { cursor: pointer }
+button:hover, select:hover { border-color: #9ac8ff }
+button:disabled { opacity: .5; cursor: default }
+.primary { background: #9ac8ff; color: #0b1322; font-weight: 750 }
+select, input[type=range] { width: 100%; accent-color: #88bcff }
+:focus-visible { outline: 2px solid #a4ddff; outline-offset: 3px }
+.row { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px }
+#trace { display: block; width: 100%; max-height: 185px; object-fit: contain; background: #0d1727; border-radius: 8px; margin-top: 8px }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; font-size: .74rem }
+.legend li { list-style: none; color: #7dd8c5 }
+.legend li:nth-child(2) { color: #ffac84 }
+.legend li:nth-child(3) { color: #75b4ff }
+table { width: 100%; font-size: .85rem; border-collapse: collapse; font-variant-numeric: tabular-nums }
+caption { text-align: left; font-size: .73rem; padding-bottom: 4px }
+td, th { text-align: left; border-bottom: 1px solid #2d3e59; padding: 3px }
+footer { padding: 16px 0; font-size: .8rem }
+@media (max-width: 720px) {
+  header, main { width: calc(100% - 28px) }
+  .workspace { grid-template-columns: 1fr }
+  .stage { grid-row: auto }
+}
