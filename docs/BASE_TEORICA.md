@@ -42,7 +42,7 @@ Con perturbación, el RMS baja aproximadamente un **18 %** en este caso. Al quit
 
 ## 4. Qué representa el 3D
 
-Con cinemática inversa convierto cada punto en dos ángulos de un mecanismo genérico. El brazo dibujado me permite ver el recorrido. Las métricas se calculan con las posiciones del simulador, antes de la visualización 3D.
+Con cinemática inversa convierto cada punto en dos ángulos de un mecanismo genérico. En el modo avanzado muestro el mecanismo de dos articulaciones. En la demostración, la mano conceptual se traslada con ese mecanismo y la punta del lápiz virtual sigue la muestra seleccionada. No simulo una postura biomecánica. Las métricas se calculan con las posiciones del simulador, antes de la visualización 3D.
 
 ## 5. Qué probaría después
 

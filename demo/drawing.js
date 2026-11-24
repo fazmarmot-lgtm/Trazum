@@ -86,9 +86,9 @@ export function setupDrawing({ onReference }) {
       report(phrase('Dibujá un trazo más largo o marcá dos puntos separados.', 'Draw a longer stroke or add two separated points.'));
       return;
     }
-    onReference(target);
     active = phrase('tu dibujo', 'your drawing');
     report();
+    onReference(target);
   });
   document.getElementById('clear-drawing').addEventListener('click', () => {
     points = [];
@@ -96,9 +96,20 @@ export function setupDrawing({ onReference }) {
     report(phrase('Dibujo borrado.', 'Drawing cleared.'));
   });
   document.getElementById('use-example').addEventListener('click', () => {
-    onReference(undefined);
     active = phrase('trazo de ejemplo', 'example stroke');
     report();
+    onReference(undefined);
   });
   report();
+
+  return {
+    reset() {
+      points = [];
+      cursor.x = pad.width / 2;
+      cursor.y = pad.height / 2;
+      active = phrase('trazo de ejemplo', 'example stroke');
+      draw();
+      report();
+    },
+  };
 }

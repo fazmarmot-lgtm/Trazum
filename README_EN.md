@@ -12,7 +12,7 @@ I'm Lautaro Verón. I started Trazum as a student at age 15. My long-term goal i
 
 ## What I built for you to try
 
-I built a simulator with two joints and a virtual stylus. Choose **English**, then **Draw my own stroke** to compare the noisy input with the filtered output. I also included an example loop. Both runs use the same synthetic disturbance. The plot reports RMS and peak error.
+Choose **English**, then **Start demonstration** to draw a stroke, compare the synchronized paths, and see the virtual stylus in 3D. I also included an example stroke. In **Advanced mode** I kept the overlay plot, two-joint mechanism, camera controls, disturbance, and filtering settings.
 
 The filter uses current and past input samples. I use the reference stroke to generate the input and score each path. [Theory](docs/BASE_TEORICA.md) · [Architecture](docs/ARQUITECTURA.md)
 

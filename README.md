@@ -12,7 +12,7 @@ Soy Lautaro Verón. Empecé Trazum como estudiante, a los 15 años. Mi objetivo 
 
 ## Qué preparé para que lo puedas probar
 
-Hice un simulador con dos articulaciones y un lápiz virtual. En **Dibujar mi trazo** podés dibujar y comparar la entrada perturbada con la salida filtrada. También dejé un lazo de ejemplo. Uso el mismo nivel de perturbación en las dos corridas, y el gráfico muestra los errores RMS y máximo.
+En **Iniciar demostración** podés dibujar un trazo, comparar las dos trayectorias sincronizadas y ver el movimiento del lápiz en 3D. También dejé un trazo de ejemplo. En **Modo avanzado** incluí el gráfico superpuesto, el mecanismo de dos articulaciones y los controles de cámara, perturbación y filtrado.
 
 El filtro usa las muestras de posición actuales y anteriores. Uso el trazo como referencia para generar la entrada y evaluar el resultado. [Base teórica](docs/BASE_TEORICA.md) · [Arquitectura](docs/ARQUITECTURA.md)
 

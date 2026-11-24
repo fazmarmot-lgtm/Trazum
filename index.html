@@ -3,60 +3,118 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1322">
+<meta name="theme-color" content="#101a2c">
 <title>Trazum · Prueba de escritura</title>
 </head>
-<body>
-<header><a class="brand" href="./">Trazum</a><nav><a id="language" href="?lang=en" lang="en">English</a><a href="https://github.com/fazmarmot-lgtm/Trazum">GitHub ↗</a></nav></header>
-<main>
-<section class="intro">
-<h1 data-en="Writing motion test">Prueba de escritura</h1>
-<p data-en="A virtual stylus follows a stroke. Try the example or draw your own to see what changes when I filter the motion.">Un lápiz virtual sigue un trazo. Probá el ejemplo o dibujá el tuyo para ver qué cambia cuando filtro el movimiento.</p>
-<div class="row actions">
-<button class="primary" type="button" id="play" data-en="Play comparison">Reproducir comparación</button>
-<button type="button" id="toggle-draw" aria-controls="drawing" aria-expanded="false" data-en="Draw my own stroke">Dibujar mi trazo</button>
-<button type="button" id="reset" data-en="Restart">Reiniciar</button>
-</div>
-</section>
-<section class="drawing" id="drawing" hidden>
-<h2 data-en="Draw one continuous stroke">Dibujá un trazo continuo</h2>
-<p id="draw-help" data-en="Try a letter L. With a keyboard, use the arrows to move and Space to place each point.">Probá con una L. Con teclado, usá las flechas para moverte y la barra espaciadora para marcar cada punto.</p>
-<canvas id="draw-pad" width="400" height="180" tabindex="0" aria-label="Lienzo de dibujo" aria-describedby="draw-help"></canvas>
-<div class="row">
-<button id="use-drawing" type="button" class="primary" data-en="Play my stroke">Reproducir mi trazo</button>
-<button id="clear-drawing" type="button" data-en="Clear drawing">Borrar dibujo</button>
-<button id="use-example" type="button" data-en="Use example">Usar ejemplo</button>
-</div>
-<p id="draw-status" role="status"></p>
-</section>
-<div class="workspace">
-<section class="results" aria-labelledby="result-title">
-<h2 id="result-title" data-en="Compare the paths">Compará los recorridos</h2>
-<p class="note" id="current-reference"></p>
-<canvas id="trace" width="560" height="320" role="img" aria-label="Comparación de trazos"></canvas>
-<ul class="legend"><li data-en="Target">Objetivo</li><li data-en="Input with disturbance">Entrada con perturbación</li><li data-en="Filtered output">Salida filtrada</li></ul>
-<table><caption data-en="Error against the target (virtual units)">Error respecto al objetivo (unidades virtuales)</caption><thead><tr><th scope="col" data-en="Metric">Métrica</th><th scope="col" data-en="Input">Entrada</th><th scope="col" data-en="Filtered">Filtrada</th></tr></thead><tbody><tr><th scope="row">RMS</th><td id="baseline-rms"></td><td id="filtered-rms"></td></tr><tr><th scope="row" data-en="Peak">Máximo</th><td id="baseline-peak"></td><td id="filtered-peak"></td></tr></tbody></table>
-<p id="interpretation" class="note"></p>
-<label for="seek"><span data-en="Timeline">Tiempo</span><output id="time" for="seek"></output></label><input id="seek" type="range" min="0" max="120" value="0">
-</section>
-<section class="stage" aria-labelledby="stage-title">
-<h2 id="stage-title" data-en="Watch the stylus in 3D">Mirá el lápiz en 3D</h2>
-<div id="viewport" role="img" aria-label="Lápiz virtual articulado"></div>
-<span id="view-status" role="status"></span>
-<label for="mode"><span data-en="Motion shown">Movimiento mostrado</span></label>
-<select id="mode"><option value="filtered" data-en="Filtered output">Salida filtrada</option><option value="baseline" data-en="Input with disturbance">Entrada con perturbación</option></select>
-<details class="settings">
-<summary data-en="Experiment settings">Ajustes de la prueba</summary>
-<label for="noise"><span data-en="Disturbance">Perturbación</span><output id="noise-value" for="noise"></output></label>
-<input id="noise" type="range" min="0" max="30" value="20">
-<label for="alpha"><span data-en="Weight of the new sample (α)">Peso de la muestra nueva (α)</span><output id="alpha-value" for="alpha"></output></label>
-<input id="alpha" type="range" min="5" max="100" value="35">
-<p class="note" data-en="A lower weight smooths more, but the stylus can lag at a turn. At 100% it follows the input directly.">Un peso bajo suaviza más, pero el lápiz puede atrasarse en un giro. Al 100 % sigue la entrada directamente.</p>
-<div class="row cameras"><button id="camera" type="button" data-en="Reset camera">Cámara inicial</button><button id="zoom-in" type="button" data-en="Zoom in">Acercar</button><button id="zoom-out" type="button" data-en="Zoom out">Alejar</button></div>
-</details>
-</section>
-</div>
-<footer data-en="Simulation with no physical sensors. I use the target to score the paths. The filter only receives the simulated input.">Simulación sin sensores físicos. Uso el objetivo para medir los recorridos. El filtro solo recibe la entrada simulada.</footer>
+<body data-mode="demo" data-stage="intro">
+<header class="shell header">
+  <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">T</span>Trazum</a>
+  <nav class="top-nav">
+    <a id="language" href="?lang=en" lang="en">English</a>
+    <a href="https://github.com/fazmarmot-lgtm/Trazum">GitHub</a>
+    <button type="button" id="toggle-mode" aria-pressed="false" data-en="Advanced mode">Modo avanzado</button>
+  </nav>
+</header>
+<main class="shell">
+  <section id="intro" class="intro">
+    <h1 data-en="How does a filter change a stroke?">¿Cómo cambia un trazo al filtrarlo?</h1>
+    <p class="lede" data-en="Draw a path and compare the same simulated movement before and after filtering.">Dibujá un trazo y compará el mismo movimiento simulado antes y después de filtrarlo.</p>
+    <div class="actions">
+      <button class="primary" type="button" id="start-demo" data-en="Start demonstration">Iniciar demostración</button>
+      <button type="button" id="quick-example" data-en="Try the example">Probar el ejemplo</button>
+    </div>
+  </section>
+
+  <ol class="steps" id="steps" aria-label="Etapas de la demostración">
+    <li data-step="draw"><span aria-hidden="true">1</span><b data-en="Draw">Dibujar</b></li>
+    <li data-step="compare"><span aria-hidden="true">2</span><b data-en="Compare">Comparar</b></li>
+    <li data-step="visualize"><span aria-hidden="true">3</span><b data-en="View in 3D">Visualizar</b></li>
+  </ol>
+
+  <section class="drawing panel" id="drawing" hidden aria-labelledby="draw-title">
+    <div class="draw-copy">
+      <h2 id="draw-title" tabindex="-1" data-en="Draw one continuous stroke">Dibujá un trazo continuo</h2>
+      <p id="draw-help" data-en="Try a letter L without lifting the pointer. With a keyboard, use the arrows to move and Space to place points.">Probá una L sin levantar el puntero. Con teclado, usá las flechas para moverte y la barra espaciadora para marcar puntos.</p>
+      <div class="actions">
+        <button id="use-drawing" type="button" class="primary" data-en="Compare my stroke">Comparar mi trazo</button>
+        <button id="use-example" type="button" data-en="Use example stroke">Usar trazo de ejemplo</button>
+        <button id="clear-drawing" type="button" data-en="Clear drawing">Borrar dibujo</button>
+      </div>
+      <p id="draw-status" class="note" role="status"></p>
+    </div>
+    <canvas id="draw-pad" width="560" height="256" tabindex="0" aria-label="Lienzo de dibujo" aria-describedby="draw-help"></canvas>
+  </section>
+
+  <div class="workspace">
+    <section id="results" class="results" aria-labelledby="result-title">
+      <div class="results-heading">
+        <div>
+          <h2 id="result-title" tabindex="-1" data-en="Before and after filtering">Antes y después del filtro</h2>
+          <p id="current-reference" class="note"></p>
+        </div>
+        <p class="key" data-en="Dashed line: target stroke">Línea punteada: trazo objetivo</p>
+      </div>
+      <div id="comparison" class="comparison">
+        <article class="trace-card input-card">
+          <h3 data-en="Before filtering">Antes del filtro</h3>
+          <canvas id="baseline-trace" width="640" height="300" role="img" aria-label="Trayectoria de entrada con perturbación"></canvas>
+          <dl class="metrics">
+            <div><dt data-en="RMS error">Error RMS</dt><dd id="baseline-rms"></dd></div>
+            <div><dt data-en="Maximum error">Error máximo</dt><dd id="baseline-peak"></dd></div>
+          </dl>
+        </article>
+        <article class="trace-card filtered-card">
+          <h3 data-en="After filtering">Después del filtro</h3>
+          <canvas id="filtered-trace" width="640" height="300" role="img" aria-label="Trayectoria de salida filtrada"></canvas>
+          <dl class="metrics">
+            <div><dt data-en="RMS error">Error RMS</dt><dd id="filtered-rms"></dd></div>
+            <div><dt data-en="Maximum error">Error máximo</dt><dd id="filtered-peak"></dd></div>
+          </dl>
+        </article>
+      </div>
+      <div id="overlay" hidden><p class="overlay-key"><span class="before" data-en="Before filtering">Antes del filtro</span><span class="after" data-en="After filtering">Después del filtro</span></p><canvas id="trace" width="640" height="300" role="img" aria-label="Trayectorias superpuestas"></canvas></div>
+      <div class="result-note"><p id="interpretation"></p><span data-en="Errors in virtual units">Errores en unidades virtuales</span></div>
+    </section>
+
+    <section class="stage panel" id="visualization" aria-labelledby="stage-title" hidden>
+      <div class="view-copy">
+        <h2 id="stage-title" tabindex="-1" data-en="See the stroke in 3D">Mirá el trazo en 3D</h2>
+        <p class="note" id="view-description" data-en="Conceptual hand and stylus. The tip follows the selected simulated path.">Mano y lápiz conceptuales. La punta sigue el recorrido simulado que elijas.</p>
+        <label for="mode"><span data-en="Path shown in 3D">Trayectoria en 3D</span></label>
+        <select id="mode"><option value="filtered" data-en="After filtering">Después del filtro</option><option value="baseline" data-en="Before filtering">Antes del filtro</option></select>
+        <p id="view-status" class="note" role="status"></p>
+      </div>
+      <div id="viewport" role="img" aria-label="Mano conceptual con lápiz virtual"></div>
+    </section>
+
+    <details class="settings panel" id="settings" hidden open>
+      <summary data-en="Experiment settings">Ajustes de la prueba</summary>
+      <label for="noise"><span data-en="Disturbance">Perturbación</span><output id="noise-value" for="noise"></output></label>
+      <input id="noise" type="range" min="0" max="30" value="20">
+      <label for="alpha"><span data-en="Weight of the new sample (α)">Peso de la muestra nueva (α)</span><output id="alpha-value" for="alpha"></output></label>
+      <input id="alpha" type="range" min="5" max="100" value="35">
+      <p class="note" data-en="A lower weight smooths more and may add lag. At 100% the output follows the input directly.">Un peso bajo suaviza más y puede sumar atraso. Al 100 % la salida sigue la entrada directamente.</p>
+      <div class="actions">
+        <button id="camera" type="button" data-en="Reset camera">Cámara inicial</button>
+        <button id="zoom-in" type="button" data-en="Zoom in">Acercar</button>
+        <button id="zoom-out" type="button" data-en="Zoom out">Alejar</button>
+      </div>
+    </details>
+  </div>
+
+  <section class="transport" id="transport" hidden aria-label="Reproducción">
+    <div class="actions transport-actions">
+      <button class="primary" type="button" id="play" data-en="Play">Reproducir</button>
+      <button type="button" id="reset" data-en="Restart demo">Reiniciar demo</button>
+      <button type="button" id="back-compare" data-en="Back to comparison" hidden>Volver a comparar</button>
+      <button type="button" id="go-3d" data-en="View in 3D">Ver en 3D</button>
+    </div>
+    <div class="playback">
+      <label for="seek"><span data-en="Time">Tiempo</span><output id="time" for="seek"></output></label>
+      <input id="seek" type="range" min="0" max="120" value="0">
+    </div>
+  </section>
+  <footer data-en="Simulated inputs. The filter uses current and past samples.">Entradas simuladas. El filtro usa muestras actuales y anteriores.</footer>
 </main>
 <script type="module" src="./demo/main.js"></script>
 </body>

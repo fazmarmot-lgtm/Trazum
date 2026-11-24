@@ -1,6 +1,6 @@
 # Cómo construí el simulador público
 
-Uso JavaScript para conectar el dibujo, el gráfico Canvas 2D y el visor Three.js. Hice el mecanismo con dos articulaciones y un lápiz virtual, usando formas geométricas simples.
+Uso JavaScript para conectar el dibujo, el gráfico Canvas 2D y el visor Three.js. En el modo avanzado uso dos articulaciones y un lápiz virtual. En el modo demostración muestro una mano conceptual y un lápiz con formas geométricas simples.
 
 | Archivo | Qué implementé |
 | --- | --- |
@@ -12,4 +12,4 @@ Uso JavaScript para conectar el dibujo, el gráfico Canvas 2D y el visor Three.j
 | [`demo/view.js`](../demo/view.js) | La visualización 3D y los dos ángulos del mecanismo. |
 | [`demo/simulation.test.js`](../demo/simulation.test.js) | Las pruebas de causalidad, métricas, repetibilidad y alcance del mecanismo. |
 
-Uso el trazo para sintetizar la entrada y medir el error. El filtro recibe solamente las posiciones de entrada. Aplico cinemática inversa al movimiento seleccionado para mostrarlo en 3D. Todo corre en el navegador. Si WebGL falla, puedo seguir usando el dibujo, el gráfico y la tabla. [Base teórica](BASE_TEORICA.md)
+Uso el trazo para sintetizar la entrada y medir el error. El filtro recibe solamente las posiciones de entrada. Los gráficos y el 3D comparten un índice de muestra. Aplico cinemática inversa al movimiento seleccionado para situar la punta del lápiz en 3D. Todo corre en el navegador. Si WebGL falla, puedo seguir usando el dibujo, el gráfico y la tabla. [Base teórica](BASE_TEORICA.md)
