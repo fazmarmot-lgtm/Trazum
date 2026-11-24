@@ -9,10 +9,21 @@
 <body>
 <header><a class="brand" href="./">Trazum</a><a href="https://github.com/fazmarmot-lgtm/Trazum">Project on GitHub ↗</a></header>
 <main>
-<section class="intro"><h1>Handwriting motion lab</h1><p>Follow a loop with a virtual stylus. Compare the same synthetic disturbance with and without a correction toward the target.</p></section>
+<section class="intro"><h1>Handwriting motion lab</h1><p>Draw your own path or use the example loop. See how the virtual stylus responds to the same disturbance with and without target correction.</p></section>
+<details class="drawing" id="drawing">
+<summary>Draw my own path</summary>
+<p id="draw-help">Draw one continuous stroke with a mouse, pen, or finger. With a keyboard, use the arrow keys and press Space to add points. Then choose Use my path.</p>
+<canvas id="draw-pad" width="400" height="180" tabindex="0" aria-label="Draw a reference path" aria-describedby="draw-help"></canvas>
+<div class="row">
+<button id="use-drawing" type="button" class="primary">Use my path</button>
+<button id="clear-drawing" type="button">Clear drawing</button>
+<button id="use-example" type="button">Use example loop</button>
+</div>
+<p id="draw-status" role="status">Active reference: example loop.</p>
+</details>
 <div class="workspace">
 <section class="stage" aria-labelledby="stage-title">
-<h2 id="stage-title">3D mechanism</h2><div id="viewport" role="img" aria-label="Articulated mechanism tracing a loop"></div>
+<h2 id="stage-title">3D mechanism</h2><div id="viewport" role="img" aria-label="Virtual stylus following the selected path"></div>
 <p id="view-status" role="status">Drag to orbit. Scroll or pinch to zoom.</p>
 <div class="row cameras" aria-label="Camera controls"><button id="camera" type="button">Reset view</button><button id="zoom-in" type="button">Zoom in</button><button id="zoom-out" type="button">Zoom out</button></div>
 </section>
@@ -23,7 +34,7 @@
 <label for="gain">Correction strength <output id="gain-value" for="gain"></output></label><input id="gain" type="range" min="0" max="100" value="65">
 <div class="row"><button type="button" class="primary" id="play">Run</button><button type="button" id="reset">Reset run</button></div>
 <label for="seek">Timeline <output id="time" for="seek"></output></label><input id="seek" type="range" min="0" max="120" value="0">
-<p class="note">The correction uses the known target path. Measurements use virtual units and describe a synthetic example.</p>
+<p class="note">The correction uses the selected path as its reference. Measurements describe simulated motion in virtual units.</p>
 </section>
 <section class="results" aria-labelledby="result-title">
 <h2 id="result-title">Trace comparison</h2><canvas id="trace" width="360" height="240" role="img" aria-label="Target, uncorrected, and corrected paths"></canvas>

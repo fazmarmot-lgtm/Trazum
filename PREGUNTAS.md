@@ -1,25 +1,21 @@
-# Preguntas del jurado
+# Cómo respondo al jurado
 
 ## ¿Qué puedo probar ahora?
 
-Una simulación pública de cuatro segundos. Podés cambiar la perturbación o la corrección, ver el movimiento del lápiz virtual en 3D y comparar los errores de dos recorridos. [Cómo reproducirla](DEMO.md)
+Preparé un simulador donde podés dibujar un trazo propio y ver cómo lo sigue el lápiz virtual con y sin corrección. También dejé un lazo de ejemplo para repetir la misma comparación. [Demostración](DEMO.md)
 
-## ¿La corrección predice qué quiere escribir una persona?
+## ¿La corrección predice lo que quiero escribir?
 
-La demo conoce de antemano el recorrido y corrige una parte de la desviación. Se usa para ilustrar una comparación controlada. El reconocimiento de intención con sensores es una línea de trabajo futura.
+Para esta demo le doy al programa el trazo como referencia. Así puedo probar cómo corrige una perturbación conocida. Para reconocer un movimiento futuro tendría que integrar los sensores y comprobar un método de estimación con datos reales.
 
-## ¿Qué se probó físicamente?
+## ¿Qué probaste físicamente?
 
-El desarrollador armó y movió a mano un índice de seis piezas en mesa. Es una observación cualitativa. El ensayo instrumental del dedo, el armado físico de la mano completa y la electrónica integrada quedan pendientes.
+Armé un índice impreso de seis piezas y moví a mano sus tres articulaciones sobre una mesa. Todavía tengo que medir fuerza y recorrido y comprobar el armado físico de la mano completa.
 
-## ¿Se usan modelos de IA?
+## ¿Usaste IA?
 
-Se usaron asistentes de IA durante el desarrollo y la revisión. La demo ejecuta cinemática y cálculos deterministas. [Declaración de IA](docs/USO_DE_IA.md)
+Sí. Usé ChatGPT/Codex para programar y documentar, y Claude y DeepSeek para tener otras revisiones técnicas. El simulador hace cálculos matemáticos con el trazo que le doy. [Declaración de IA](docs/USO_DE_IA.md)
 
-## ¿Cómo van a evaluar el próximo prototipo?
+## ¿Qué vas a hacer después?
 
-Medir fuerza y recorrido durante varias repeticiones en mesa y registrar desgaste y juego. Antes de probar asistencia sobre una persona hace falta definir el protocolo de seguridad y evaluación.
-
-## ¿Cuándo se desarrolló?
-
-El registro de desarrollo documenta etapas entre octubre y noviembre de 2026. La declaración para Devpost tiene marcados los hitos que todavía requieren confirmar su relación con la participación en el evento. [Cronología](docs/DESARROLLO.md) · [Ficha de Devpost](PITCH.md#stem2connect-y-devpost)
+Quiero medir fuerza y recorrido en varios ciclos y seguir conversando con mi antiguo colegio. Antes de probar el guante sobre una persona necesito acordar cómo se haría la evaluación y completar las verificaciones de seguridad. [Cronología](docs/DESARROLLO.md)

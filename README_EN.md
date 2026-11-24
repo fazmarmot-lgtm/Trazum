@@ -2,7 +2,7 @@
 
 [Español](README.md) · [Hackathon pitch](PITCH.md#english) · [Demo and evidence](DEMO.md)
 
-**An Argentine student project exploring how technology could support handwriting movements.** When holding or moving a pencil takes effort, the challenge begins before the first letter. Trazum grew out of a conversation during a visit to Instituto Social Militar Dr. Dámaso Centeno, where I learned about this difficulty. [Project story in Spanish](docs/HISTORIA.md)
+**An Argentine student project exploring how technology could support handwriting movements.** When holding or moving a pencil takes effort, the challenge begins before the first letter. I started Trazum after learning about this difficulty on a visit to my former school, Instituto Social Militar Dr. Dámaso Centeno. [Project story in Spanish](docs/HISTORIA.md)
 
 I'm Lautaro Verón. I started Trazum as a student at age 15. My long-term goal is to explore a robotic glove that could support finger and wrist movements through sensors and actuators. The current work consists of simulations and bench prototypes.
 
@@ -10,11 +10,11 @@ I'm Lautaro Verón. I started Trazum as a student at age 15. My long-term goal i
 
 *Bench index finger in extension, image supplied by the developer.* [Index finger gallery](media/README.md)
 
-## Public simulator
+## What I built for you to try
 
-A standalone demo moves a virtual stylus with an articulated mechanism. Orbit or zoom the camera, run or pause the four-second trace, scrub the timeline, adjust the disturbance and correction, or reset the run. The plot compares both motions against the same synthetic reference and reports RMS and peak error.
+I built a simulator with two joints and a virtual stylus. Open **Draw my own path** to draw a stroke and see how the stylus follows it with and without correction. I also included an example loop. Both runs use the same synthetic disturbance. The plot reports RMS and peak error.
 
-The correction has access to the known target. Measurements use virtual units. The demo is built with JavaScript, Three.js, Vite, and Canvas 2D. [Architecture in Spanish](docs/ARQUITECTURA.md)
+I give the correction the drawn path as its reference. I measure the results in virtual units. I built the demo with JavaScript, Three.js, Vite, and Canvas 2D. [How I built it](docs/ARQUITECTURA.md)
 
 ### Run locally
 
@@ -35,18 +35,18 @@ npm run build
 npm run preview
 ```
 
-## Evidence and current status
+## What I tested
 
 | Evidence | Result | Scope |
 | --- | --- | --- |
 | Public simulator | 121 reproducible samples. Default RMS error is 0.176 uncorrected and 0.062 with target correction. | Synthetic case with a known target. |
-| Printed index finger | The developer reported assembling and flexing a six-piece prototype by hand on a bench. | Qualitative observation of one unit. |
-| Digital audits | No interferences were reported in 192 sampled index configurations and 45 sampled full-hand poses. | The reports match the meshes for the audited revisions. |
+| Printed index finger | I assembled and flexed a six-piece prototype by hand on a bench. | Qualitative observation of one unit. |
+| Digital audits | I checked 192 index configurations and 45 full-hand poses. I found no interferences in those samples. | The reports match the meshes for the audited revisions. |
 
-A complete motorized hand, integrated sensing, and intention recognition are still pending. The next bench experiment will measure how much force is needed and how far the finger travels across repeated cycles. Effects on handwriting and use on a person still need evaluation. **Trazum is an experimental prototype that has not been validated as a medical device.** [Development and results](docs/DESARROLLO.md) · [Limitations](docs/LIMITACIONES.md)
+I still need to integrate sensing and motors and test whether I can estimate hand movement. Next I plan to measure force and travel across repeated bench trials. I also want to find out whether Trazum could help with a handwriting task. **Trazum is an experimental prototype that has not been validated as a medical device.** [Development and results](docs/DESARROLLO.md) · [Limitations](docs/LIMITACIONES.md)
 
 ## AI disclosure and demo video
 
 I used ChatGPT/Codex for development and documentation, and Claude and DeepSeek for technical review. The standalone demo uses classical kinematics and mathematical correction. It has no trained model or AI API dependency. [AI disclosure in Spanish](docs/USO_DE_IA.md)
 
-The demo video is pending recording. [Demo outline and evidence](DEMO.md) · [Jury Q&A](PREGUNTAS.md)
+I’ll add the video link once it’s ready. [Demo outline and evidence](DEMO.md) · [Jury Q&A](PREGUNTAS.md)

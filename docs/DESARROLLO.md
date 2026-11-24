@@ -1,18 +1,24 @@
-# Desarrollo y resultados
+# Cómo fui desarrollando Trazum
 
-| Etapa | Evidencia disponible |
+| Cuándo | Qué hice |
 | --- | --- |
-| Investigación y simulación | El registro de desarrollo del 29 de octubre de 2026 documenta un simulador de movimiento y escritura. Era trabajo de investigación. La demo de este repositorio se desarrolló como aplicación independiente. |
-| Diseño e impresión del índice | En noviembre de 2026 el desarrollador mostró una foto del índice impreso y reportó que las articulaciones se doblaban a mano. Informó algo de juego en un encastre. No hay registro instrumental ni una tanda de repeticiones supervisadas. |
-| Revisión digital | Los informes del índice y de la mano compacta registran 192 y 45 muestras, respectivamente, con cero interferencias en las posturas examinadas. Se compararon los SHA-256 de los informes con los STL de entrada de ambas revisiones, con cero discrepancias. Los informes no constituyen pruebas físicas. |
-| Demo pública independiente | Preparada en noviembre de 2026. Incluye un mecanismo genérico, una corrida determinista, dos trayectorias bajo la misma perturbación y métricas sintéticas. |
+| Al inicio, fecha sin registrar | Volví de visita al Dámaso Centeno y me quedé pensando en las dificultades que me contaron. Empecé a trabajar en una idea ese mismo día. No tengo registrada la fecha exacta de la visita. |
+| 29 de octubre de 2026 | Registré una primera versión del simulador de investigación, con movimiento sintético y visualización 3D de escritura. Es el primer registro de desarrollo que pude fechar. |
+| 5 de noviembre de 2026 | Escribí a mi antiguo colegio para contarles la idea y ofrecerme a mostrar el prototipo. |
+| 11 de noviembre de 2026 | Ya tenía un candidato digital del índice R8 con encastres y guía para el carro. En esa etapa revisé trayectorias y posturas del modelo. |
+| Noviembre de 2026 | Imprimí un índice de seis piezas, lo armé y moví a mano sus tres articulaciones. En una de las pruebas noté algo de juego en un encastre. |
+| Noviembre de 2026 | Preparé el simulador público independiente. Empecé con un lazo de ejemplo y después agregué la opción de dibujar un trazo propio. |
 
-Con la amplitud inicial de 0,20 unidades virtuales y la corrección al 65 %, el RMS es 0,176 para la trayectoria sin corrección y 0,062 para la corregida. Los picos son 0,250 y 0,087. Las cuatro pruebas automatizadas verifican repetibilidad, casos límite, métricas y alcance del modelo articulado.
+El programa STEM2Connect empezó el 11 de octubre. El primer registro fechado que tengo es posterior. La fecha exacta en que surgió la idea queda abierta. [Ficha para Devpost](../PITCH.md#stem2connect-y-devpost)
 
-## Próximos pasos
+## Qué comprobé
 
-1. Registrar fuerza y recorrido en mesa, repetir la prueba y documentar el juego y el desgaste del encastre.
-2. Comprobar el armado de la mano completa y probar sensado y actuación primero en un banco de pruebas.
-3. Definir un protocolo de seguridad y evaluación antes de ensayar un dispositivo sobre una persona o medir su efecto sobre la escritura.
+En la prueba física observé cómo se armaba y se movía un índice impreso. Todavía no medí fuerzas ni repetí una serie instrumentada.
 
-Para la declaración de trabajo previo y del período del evento, ver [la ficha de Devpost](../PITCH.md#stem2connect-y-devpost).
+Los informes digitales del índice y de la mano compacta registran 192 y 45 posturas, respectivamente, con cero interferencias en las muestras examinadas. Verifiqué que los hashes de los informes coinciden con los STL de las dos revisiones.
+
+Con la configuración inicial del simulador obtuve un error RMS de 0,176 y 0,062 unidades virtuales y picos de 0,250 y 0,087. La diferencia sale de la corrección hacia una trayectoria conocida. Al dibujar otro trazo puedo comparar la forma del recorrido y observar el lápiz sobre ese nuevo objetivo. Con los mismos parámetros, el error teórico puede mantenerse igual porque aplico la misma perturbación relativa.
+
+## Qué sigue
+
+Primero quiero medir fuerza y recorrido en mesa y ver cuánto juego aparece después de varios ciclos. Después quiero probar la mano completa y la electrónica en banco. También quiero seguir conversando con el colegio para entender qué dificultades priorizar y acordar el protocolo antes de probar un dispositivo sobre una persona.

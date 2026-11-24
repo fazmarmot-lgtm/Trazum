@@ -1,6 +1,7 @@
 import './style.css';
 import { DURATION, DEFAULTS, SAMPLE_COUNT, simulate, summarize } from './simulation.js';
 import { createView } from './view.js';
+import { setupDrawing } from './drawing.js';
 
 const byId = (id) => document.getElementById(id);
 const seek = byId('seek');
@@ -20,6 +21,7 @@ try {
 }
 
 let samples;
+let reference;
 let frame = 0;
 let animation;
 let start;
@@ -57,7 +59,7 @@ function render(index) {
 function refresh() {
   byId('noise-value').textContent = (+noise.value / 100).toFixed(2) + ' vu';
   byId('gain-value').textContent = gain.value + '%';
-  samples = simulate({ disturbance: +noise.value / 100, strength: +gain.value / 100 });
+  samples = simulate({ disturbance: +noise.value / 100, strength: +gain.value / 100 }, reference);
   view?.setTarget(samples);
   for (const kind of ['baseline', 'guided']) {
     for (const [metric, value] of Object.entries(summarize(samples, kind))) {
@@ -102,6 +104,16 @@ byId('reset').addEventListener('click', () => {
   play.textContent = 'Run';
   refresh();
 });
+setupDrawing({
+  onReference(nextReference) {
+    pause();
+    reference = nextReference;
+    refresh();
+    render(0);
+    play.textContent = 'Run';
+  },
+});
+
 byId('camera').addEventListener('click', () => view?.resetCamera());
 byId('zoom-in').addEventListener('click', () => view?.zoom(0.8));
 byId('zoom-out').addEventListener('click', () => view?.zoom(1.25));

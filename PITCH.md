@@ -1,28 +1,24 @@
-# Trazum para inscripciones
+# Cómo presento Trazum
 
 ## Español
 
-Sostener y mover un lápiz puede requerir mucho esfuerzo antes de escribir la primera letra. Soy Lautaro Verón y empecé Trazum para investigar cómo un dispositivo articulado podría acompañar ese movimiento. La idea nació en una visita al Dámaso Centeno.
+Volví de visita a mi antiguo colegio, el Dámaso Centeno, y me contaron que a algunos chicos de primaria les costaba escribir por dificultades motrices. Pensé en eso todo el camino de vuelta. Ese mismo día empecé a trabajar en una idea para ayudarlos.
 
-La demo pública compara dos recorridos virtuales bajo la misma perturbación sintética. Podés ver el movimiento en 3D, cambiar parámetros y repetir la prueba. En paralelo probé a mano un índice impreso sobre una mesa. El siguiente paso es registrar fuerza y recorrido para comparar versiones.
+Estoy investigando cómo un guante articulado podría hacer más estable el movimiento del lápiz. Ya armé un índice de seis piezas y moví a mano sus tres articulaciones sobre una mesa. También preparé un simulador para que cualquiera pueda dibujar un trazo y comparar cómo lo sigue un lápiz virtual con y sin corrección. Mi próximo paso es medir la fuerza y el recorrido del dedo.
 
 ## English
 
-Holding and moving a pencil can take effort before the first letter is written. I'm Lautaro Verón, and I started Trazum after a school visit where I learned about this difficulty. My goal is to investigate how an articulated device could support handwriting movements.
+I returned to my former school, Dámaso Centeno, and heard that some elementary students had trouble writing because of motor difficulties. I thought about that the whole way home. That same day, I started working on an idea that might help.
 
-The public demo compares two virtual motions under the same synthetic disturbance. You can see the mechanism in 3D, change parameters, and repeat the test. I also bench-tested a 3D-printed index finger by moving it by hand. The next step is to measure force and travel across repeated trials.
+I'm exploring how an articulated glove could steady a pencil stroke. I assembled a six-piece finger and moved its three joints by hand on a bench. I also built a public simulator where anyone can draw a path and compare how a virtual stylus follows it with and without correction. My next step is to measure how much force it takes to move the printed finger and how far it travels.
 
 ## STEM2Connect y Devpost
 
-| Campo | Texto o dato para la presentación |
-| --- | --- |
-| Track | **Education**. Investigación sobre barreras motrices en la escritura escolar. |
-| Antes del hackatón | **Por confirmar con el autor.** Identificar qué trabajo ya existía antes del 11 de octubre de 2026. Evitar presentar la impresión de noviembre o el simulador registrado el 29 de octubre como trabajo previo a esa fecha. |
-| Durante el período del hackatón | El registro del simulador de investigación es de octubre. El índice de mesa y la demo pública independiente corresponden a noviembre. Confirmar qué hitos formaron parte de la participación efectiva. |
-| Tecnologías | JavaScript, Three.js, Vite, Canvas 2D y pruebas con Node.js. |
-| Dificultad | Hacer una demostración que se pueda reproducir de forma independiente y que mantenga reservados los archivos de fabricación. |
-| Aprendizaje | Una observación de mesa ayuda a detectar problemas de armado y movimiento. El error de una simulación con objetivo conocido cumple otro propósito y no mide beneficio para estudiantes. |
-| IA | ChatGPT/Codex para programación y documentación, Claude y DeepSeek para revisión técnica. La demo ejecutable usa métodos matemáticos y no llama a un modelo de IA. |
-| Pendiente | Medir fuerza y recorrido, probar el armado de la mano completa y evaluar electrónica y sensado en banco. |
+- **Categoría:** Education.
+- **Cronología:** El programa empezó el 11 de octubre. Mi primer registro fechado es el simulador de investigación del 29 de octubre. En noviembre escribí al colegio, avancé con el índice R8, lo probé impreso y preparé la demo pública. La fecha exacta de mi visita al colegio queda sin confirmar.
+- **Tecnologías:** Usé JavaScript, Three.js, Vite, Canvas 2D y pruebas con Node.js.
+- **Dificultad:** Tuve que volver al CAD después de varias impresiones y preparar una demo que se pudiera ejecutar sin los diseños de fabricación.
+- **Aprendizaje:** Probar un solo dedo me ayudó a detectar qué tenía que cambiar. El simulador me permite estudiar otra cosa: cómo sigue un lápiz virtual una trayectoria conocida.
+- **IA:** Usé ChatGPT/Codex para programación y documentación, y Claude y DeepSeek para revisión técnica. El simulador ejecuta cálculos deterministas. [Uso de IA](docs/USO_DE_IA.md)
 
-Para enviar la candidatura, completar la cronología, enlazar el repositorio público y el video, y confirmar los integrantes y la autorización del adulto responsable si aplica. [Reglas oficiales](https://stem2connect-online-hackathon.devpost.com/rules) · [Guion](DEMO.md) · [Uso de IA](docs/USO_DE_IA.md)
+[Mi cronología de desarrollo](docs/DESARROLLO.md) · [Mi demostración](DEMO.md) · [Reglas oficiales](https://stem2connect-online-hackathon.devpost.com/rules)

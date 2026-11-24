@@ -1,13 +1,14 @@
-# Arquitectura pública
+# Cómo construí el simulador público
 
-| Archivo | Función |
+Usé JavaScript para conectar los controles, el gráfico Canvas 2D y el visor Three.js. Hice el mecanismo con dos articulaciones y un lápiz virtual. Su geometría está hecha con primitivas y no requiere los diseños de fabricación de la mano.
+
+| Archivo | Qué implementé |
 | --- | --- |
-| [`index.html`](../index.html) y [`demo/style.css`](../demo/style.css) | Interfaz y diseño adaptable. |
-| [`demo/simulation.js`](../demo/simulation.js) | Genera 121 muestras de un lazo, añade perturbación determinista, interpola hacia el objetivo y calcula error RMS y pico. También resuelve los dos ángulos del mecanismo. |
-| [`demo/main.js`](../demo/main.js) | Conecta parámetros, reloj, controles y gráfico Canvas 2D. |
-| [`demo/view.js`](../demo/view.js) | Dibuja dos segmentos genéricos articulados y un lápiz virtual en Three.js. Construye la geometría con primitivas. |
-| [`demo/simulation.test.js`](../demo/simulation.test.js) | Verifica el modelo matemático con el ejecutor de pruebas de Node.js. |
+| [`index.html`](../index.html) y [`demo/style.css`](../demo/style.css) | La interfaz, el área para dibujar y los controles. |
+| [`demo/drawing.js`](../demo/drawing.js) | Entrada de mouse, táctil, lápiz y teclado. |
+| [`demo/simulation.js`](../demo/simulation.js) | Reparto uniforme de 121 muestras a lo largo del trazo, perturbación, corrección, métricas y cálculo de ángulos. |
+| [`demo/main.js`](../demo/main.js) | Reproducción, gráfico y tabla de resultados. |
+| [`demo/view.js`](../demo/view.js) | Render del mecanismo articulado, la referencia y el lápiz. |
+| [`demo/simulation.test.js`](../demo/simulation.test.js) | Pruebas de repetibilidad, métricas y alcance del mecanismo. |
 
-Cada corrida usa la misma trayectoria objetivo y la misma perturbación para ambos modos. La fuerza de corrección define qué fracción de la desviación se elimina en cada muestra. El punto resultante se convierte en dos ángulos con cinemática inversa plana. La cámara permite ver ese plano en 3D. Si WebGL no está disponible, el gráfico y las métricas siguen funcionando.
-
-Todo se ejecuta en el navegador. Los parámetros se mantienen en memoria durante la sesión. La demo no recibe datos de sensores ni se conecta a dispositivos o a servidores de inferencia.
+Aplico la misma perturbación a ambos modos. La fuerza de corrección define qué proporción de esa desviación quito. Uso cinemática inversa para traducir cada punto en dos ángulos y mostrar el movimiento. Todo corre en el navegador. Si WebGL falla, puedo seguir usando el dibujo, el gráfico y la tabla.

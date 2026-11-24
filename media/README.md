@@ -18,4 +18,4 @@
 
 *Material ilustrativo para la presentación. Illustrative presentation material.*
 
-**Video pendiente.** [Guion de la demostración](../DEMO.md)
+Voy a sumar el enlace al video cuando esté listo. [Guion de la demostración](../DEMO.md)
