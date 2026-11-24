@@ -17,8 +17,8 @@
 </header>
 <main class="shell">
   <section id="intro" class="intro">
-    <h1 data-en="How does a filter change a stroke?">¿Cómo cambia un trazo al filtrarlo?</h1>
-    <p class="lede" data-en="Draw a path and compare the same simulated movement before and after filtering.">Dibujá un trazo y compará el mismo movimiento simulado antes y después de filtrarlo.</p>
+    <h1 data-en="Draw a shaky line. See it straighten.">Dibujá una línea irregular. Mirá cómo se endereza.</h1>
+    <p class="lede" data-en="Trazum works on your stroke. Choose a straight line or a smoother curve and compare the result with your drawing.">Trazum trabaja sobre tu dibujo. Elegí una recta o una curva más suave y compará el resultado con tu trazo.</p>
     <div class="actions">
       <button class="primary" type="button" id="start-demo" data-en="Start demonstration">Iniciar demostración</button>
       <button type="button" id="quick-example" data-en="Try the example">Probar el ejemplo</button>
@@ -31,12 +31,17 @@
     <li data-step="visualize"><span aria-hidden="true">3</span><b data-en="View in 3D">Visualizar</b></li>
   </ol>
 
+  <fieldset id="intent-panel" class="intent" hidden>
+    <legend data-en="What do you want to draw?">¿Qué querés dibujar?</legend>
+    <label><input type="radio" name="intent" value="line" checked><span data-en="A straight line">Una recta</span></label>
+    <label><input type="radio" name="intent" value="smooth"><span data-en="A smoother curve">Una curva más suave</span></label>
+  </fieldset>
   <section class="drawing panel" id="drawing" hidden aria-labelledby="draw-title">
     <div class="draw-copy">
       <h2 id="draw-title" tabindex="-1" data-en="Draw one continuous stroke">Dibujá un trazo continuo</h2>
-      <p id="draw-help" data-en="Try a letter L without lifting the pointer. With a keyboard, use the arrows to move and Space to place points.">Probá una L sin levantar el puntero. Con teclado, usá las flechas para moverte y la barra espaciadora para marcar puntos.</p>
+      <p id="draw-help" data-en="Try a shaky horizontal line from left to right. With a keyboard, use the arrows and Space to place points.">Probá una línea irregular de izquierda a derecha. Con teclado, usá las flechas y Espacio para marcar puntos.</p>
       <div class="actions">
-        <button id="use-drawing" type="button" class="primary" data-en="Compare my stroke">Comparar mi trazo</button>
+        <button id="use-drawing" type="button" class="primary" data-en="Apply assistance">Aplicar ayuda</button>
         <button id="use-example" type="button" data-en="Use example stroke">Usar trazo de ejemplo</button>
         <button id="clear-drawing" type="button" data-en="Clear drawing">Borrar dibujo</button>
       </div>
@@ -49,31 +54,31 @@
     <section id="results" class="results" aria-labelledby="result-title">
       <div class="results-heading">
         <div>
-          <h2 id="result-title" tabindex="-1" data-en="Before and after filtering">Antes y después del filtro</h2>
+          <h2 id="result-title" tabindex="-1" data-en="Your drawing and the assisted stroke">Tu dibujo y el trazo asistido</h2>
           <p id="current-reference" class="note"></p>
         </div>
-        <p class="key" data-en="Dashed green line: reference stroke">Línea verde punteada: tu trazo de referencia</p>
+        <p class="key" id="target-key" data-en="Dashed green line: reference stroke">Línea verde punteada: tu trazo de referencia</p>
       </div>
       <div id="comparison" class="comparison">
         <article class="trace-card input-card">
-          <h3 data-en="Before filtering">Antes del filtro</h3>
+          <h3 id="input-title" data-en="Original stroke">Trazo original</h3>
           <canvas id="baseline-trace" width="640" height="300" role="img" aria-label="Trayectoria de entrada con perturbación"></canvas>
-          <dl class="metrics">
+          <dl class="metrics" id="baseline-metrics">
             <div><dt data-en="RMS error">Error RMS</dt><dd id="baseline-rms"></dd></div>
             <div><dt data-en="Maximum error">Error máximo</dt><dd id="baseline-peak"></dd></div>
           </dl>
         </article>
         <article class="trace-card filtered-card">
-          <h3 data-en="After filtering">Después del filtro</h3>
+          <h3 id="output-title" data-en="Assisted stroke">Trazo asistido</h3>
           <canvas id="filtered-trace" width="640" height="300" role="img" aria-label="Trayectoria de salida filtrada"></canvas>
           <dl class="metrics">
-            <div><dt data-en="RMS error">Error RMS</dt><dd id="filtered-rms"></dd></div>
-            <div><dt data-en="Maximum error">Error máximo</dt><dd id="filtered-peak"></dd></div>
+            <div><dt id="output-rms-label" data-en="RMS error">Error RMS</dt><dd id="filtered-rms"></dd></div>
+            <div><dt id="output-peak-label" data-en="Maximum error">Error máximo</dt><dd id="filtered-peak"></dd></div>
           </dl>
         </article>
       </div>
       <div id="overlay" hidden><p class="overlay-key"><span class="before" data-en="Before filtering">Antes del filtro</span><span class="after" data-en="After filtering">Después del filtro</span></p><canvas id="trace" width="640" height="300" role="img" aria-label="Trayectorias superpuestas"></canvas></div>
-      <div class="result-note"><p id="interpretation"></p><span data-en="Errors in virtual units">Errores en unidades virtuales</span></div>
+      <div class="result-note"><p id="interpretation"></p><span data-en="Values in virtual units">Valores en unidades virtuales</span></div>
     </section>
 
     <section class="stage panel" id="visualization" aria-labelledby="stage-title" hidden>
@@ -115,7 +120,7 @@
       <input id="seek" type="range" min="0" max="120" value="0">
     </div>
   </section>
-  <footer data-en="Simulated inputs. The filter uses current and past samples.">Entradas simuladas. El filtro usa muestras actuales y anteriores.</footer>
+  <footer id="scope" data-en="Digital stroke assistance. The 3D hand illustrates the same path.">Asistencia digital sobre el trazo. La mano 3D ilustra el mismo recorrido.</footer>
 </main>
 <script type="module" src="./demo/main.js"></script>
 </body>

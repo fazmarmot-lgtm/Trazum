@@ -1,6 +1,14 @@
-# Cómo pruebo el filtro de movimiento
+# Cómo comparo la ayuda sobre un trazo y pruebo el filtro
 
-## Pregunta
+## Ayuda sobre el dibujo terminado
+
+En la demostración uso los puntos que dibujé, con la misma escala horizontal y vertical. Los reparto por distancia para la reproducción. Si elijo recta, construyo un segmento entre el primer y el último punto. Mido la distancia geométrica de cada muestra al segmento, con independencia de su posición en la reproducción. La salida cae sobre ese segmento por construcción.
+
+Si elijo suavizar, aplico cuatro pasadas de promedio local ponderado. Cada pasada combina una muestra (peso 2/4) con sus vecinas a tres posiciones de distancia (1/4 cada una) y conserva inicio y final. Si los extremos están demasiado cerca para definir una recta útil, uso este método e indico el cambio en pantalla. Para una curva reporto el desplazamiento entre el dibujo y la salida, ya que no dispongo de un trazo ideal.
+
+Esta demostración procesa el dibujo después de que la persona termina el trazo. El modo avanzado es el experimento causal descrito abajo.
+
+## Pregunta del experimento avanzado
 
 Quiero saber cuándo un filtro que solo recibe muestras de posición puede reducir las oscilaciones del lápiz y cuándo el retraso que introduce empeora el seguimiento. Trabajo con posiciones virtuales en 2D. Los sensores, las fuerzas, los motores y la respuesta de una persona quedan fuera de este experimento.
 

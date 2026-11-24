@@ -12,9 +12,9 @@ I'm Lautaro Verón. I started Trazum as a student at age 15. My long-term goal i
 
 ## What I built for you to try
 
-Choose **English**, then **Start demonstration** to draw a stroke, compare the synchronized paths, and see the virtual stylus in 3D. I also included an example stroke. In **Advanced mode** I kept the overlay plot, two-joint mechanism, camera controls, disturbance, and filtering settings.
+Choose **English**, then **Start demonstration** to draw a stroke and select **A straight line** or **A smoother curve**. I apply the selected assistance after you finish drawing and show both paths in 2D and 3D. I also included a shaky example stroke. In **Advanced mode** I kept the overlay plot, two-joint mechanism, camera controls, disturbance, and filtering settings.
 
-The filter uses current and past input samples. I use the reference stroke to generate the input and score each path. [Theory](docs/BASE_TEORICA.md) · [Architecture](docs/ARQUITECTURA.md)
+In advanced mode I can add simulated disturbance and evaluate a filter that uses current and past input samples. [Theory](docs/BASE_TEORICA.md) · [Architecture](docs/ARQUITECTURA.md)
 
 ### Run locally
 
@@ -39,7 +39,7 @@ npm run preview
 
 | Evidence | Result | Scope |
 | --- | --- | --- |
-| Public simulator | 121 reproducible samples. Default RMS error is 0.114 for the input and 0.104 after filtering. | Synthetic case with a known target. |
+| Advanced experiment | 121 reproducible samples. Default RMS error is 0.114 for the input and 0.104 after filtering. | Synthetic case with a known target. |
 | Printed index finger | I assembled and flexed a six-piece prototype by hand on a bench. | Qualitative observation of one unit. |
 | Digital audits | I checked 192 index configurations and 45 full-hand poses. I found no interferences in those samples. | The reports match the meshes for the audited revisions. |
 

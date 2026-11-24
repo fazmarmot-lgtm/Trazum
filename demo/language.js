@@ -13,8 +13,8 @@ export function localize() {
   document.getElementById('draw-pad').setAttribute('aria-label', 'Drawing pad');
   document.getElementById('steps').setAttribute('aria-label', 'Demonstration stages');
   document.getElementById('transport').setAttribute('aria-label', 'Playback');
-  document.getElementById('baseline-trace').setAttribute('aria-label', 'Input path with disturbance');
-  document.getElementById('filtered-trace').setAttribute('aria-label', 'Filtered output path');
+  document.getElementById('baseline-trace').setAttribute('aria-label', 'Original stroke');
+  document.getElementById('filtered-trace').setAttribute('aria-label', 'Assisted stroke');
   document.getElementById('trace').setAttribute('aria-label', 'Path comparison');
   document.getElementById('viewport').setAttribute('aria-label', 'Conceptual hand with virtual stylus');
 }

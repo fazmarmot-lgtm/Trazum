@@ -1,5 +1,6 @@
 import './style.css';
 import { DURATION, DEFAULTS, SAMPLE_COUNT, simulate, summarize } from './simulation.js';
+import { EXAMPLE_STROKE, assistStroke } from './assistance.js';
 import { createView } from './view.js';
 import { setupDrawing } from './drawing.js';
 import { english, localize, phrase } from './language.js';
@@ -36,6 +37,7 @@ let stage = 'intro';
 let advanced = false;
 let samples;
 let reference;
+let intent = 'line';
 let frame = 0;
 let animation;
 let startedAt;
@@ -59,7 +61,7 @@ function showView() {
 }
 
 function fitTrace(run) {
-  const points = run.flatMap(({ baseline, filtered, target }) => [baseline, filtered, target]);
+  const points = run.flatMap(({ baseline, filtered, target }) => target ? [baseline, filtered, target] : [baseline, filtered]);
   const xs = points.map(({ x }) => x);
   const ys = points.map(({ y }) => y);
   const minX = Math.min(...xs);
@@ -97,7 +99,7 @@ function drawPlots() {
     if (canvas.id === 'trace' && !advanced) continue;
     context.clearRect(0, 0, canvas.width, canvas.height);
     for (const kind of paths) drawPath(context, kind, end);
-    drawPath(context, 'target', SAMPLE_COUNT - 1);
+    if (samples[0].target) drawPath(context, 'target', SAMPLE_COUNT - 1);
     for (const kind of paths) {
       if (preview) continue;
       context.beginPath();
@@ -116,29 +118,82 @@ function render(index) {
   drawPlots();
 }
 
+function metric(kind, values) {
+  for (const [name, value] of Object.entries(values)) {
+    byId(kind + '-' + name).textContent = number.format(value);
+  }
+}
+
+function updateLabels(applied) {
+  const smoothed = applied === 'smooth';
+  byId('result-title').textContent = advanced
+    ? phrase('Antes y después del filtro', 'Before and after filtering')
+    : phrase('Trazo original y trazo asistido', 'Original and assisted stroke');
+  byId('input-title').textContent = advanced
+    ? phrase('Entrada con perturbación', 'Input with disturbance')
+    : reference ? phrase('Tu trazo', 'Your stroke') : phrase('Trazo de ejemplo', 'Example stroke');
+  byId('output-title').textContent = advanced
+    ? phrase('Salida filtrada', 'Filtered output')
+    : smoothed ? phrase('Curva suavizada', 'Smoothed curve') : phrase('Recta asistida', 'Assisted line');
+  byId('target-key').hidden = smoothed;
+  byId('target-key').textContent = advanced
+    ? phrase('Verde punteado: trazo de referencia', 'Dashed green: reference stroke')
+    : phrase('Verde punteado: recta entre tus extremos', 'Dashed green: line between the endpoints');
+  byId('baseline-metrics').hidden = smoothed;
+  byId('output-rms-label').textContent = smoothed ? phrase('Cambio RMS', 'RMS change') : phrase('Error RMS', 'RMS error');
+  byId('output-peak-label').textContent = smoothed ? phrase('Cambio máximo', 'Maximum change') : phrase('Error máximo', 'Maximum error');
+  motion.options[0].textContent = advanced ? phrase('Salida filtrada', 'Filtered output') : phrase('Trazo asistido', 'Assisted stroke');
+  motion.options[1].textContent = advanced ? phrase('Entrada con perturbación', 'Input with disturbance') : phrase('Trazo original', 'Original stroke');
+  byId('scope').textContent = advanced
+    ? phrase('Prueba con ruido simulado y filtro causal. El filtro usa muestras actuales y anteriores.', 'Simulated disturbance and causal filter. The filter uses current and past samples.')
+    : phrase('Asistencia digital sobre el trazo. La mano 3D ilustra el mismo recorrido.', 'Digital stroke assistance. The 3D hand illustrates the same path.');
+}
+
 function refresh() {
   byId('noise-value').textContent = noise.value + '%';
   byId('alpha-value').textContent = alpha.value + '%';
-  byId('current-reference').textContent = reference
-    ? phrase('Objetivo: tu trazo.', 'Target: your stroke.')
-    : phrase('Objetivo: trazo de ejemplo.', 'Target: example stroke.');
-  samples = simulate({ ...DEFAULTS, disturbance: +noise.value / 100, alpha: +alpha.value / 100 }, reference);
+  const result = byId('interpretation');
+  if (advanced) {
+    samples = simulate({ ...DEFAULTS, disturbance: +noise.value / 100, alpha: +alpha.value / 100 }, reference);
+    updateLabels('experiment');
+    byId('current-reference').textContent = reference
+      ? phrase('Referencia de la prueba: tu trazo.', 'Test reference: your stroke.')
+      : phrase('Referencia de la prueba: lazo de ejemplo.', 'Test reference: example loop.');
+    const before = summarize(samples, 'baseline');
+    const after = summarize(samples, 'filtered');
+    metric('baseline', before);
+    metric('filtered', after);
+    const difference = after.rms - before.rms;
+    if (Math.abs(difference) < 0.0005) {
+      result.textContent = phrase('El error RMS es prácticamente igual.', 'RMS error is effectively the same.');
+    } else if (difference < 0) {
+      result.textContent = phrase('Menor error RMS después del filtro en esta prueba.', 'Lower RMS error after filtering in this test.');
+    } else {
+      result.textContent = phrase('Mayor error RMS después del filtro en esta prueba.', 'Higher RMS error after filtering in this test.');
+    }
+  } else {
+    const assisted = assistStroke(reference ?? EXAMPLE_STROKE, intent);
+    samples = assisted.samples;
+    updateLabels(assisted.applied);
+    byId('current-reference').textContent = reference
+      ? phrase('La entrada es el trazo que dibujaste.', 'The input is the stroke you drew.')
+      : phrase('Trazo de ejemplo para probar la ayuda.', 'Example stroke to try the assistance.');
+    if (assisted.applied === 'line') {
+      metric('baseline', assisted.displacement);
+      metric('filtered', summarize(samples, 'filtered'));
+      result.textContent = phrase(
+        'La ayuda une el inicio y el final con una recta. El error mide la distancia a ese segmento.',
+        'Assistance joins the endpoints with a straight line. Error measures distance to that segment.',
+      );
+    } else {
+      metric('filtered', assisted.displacement);
+      result.textContent = intent === 'line'
+        ? phrase('Los extremos están muy cerca. Suavicé la curva para conservar el trazo.', 'The endpoints are close together. I smoothed the curve to preserve the stroke.')
+        : phrase('La ayuda reduce los cambios bruscos. Los números miden cuánto cambió tu dibujo.', 'Assistance reduces abrupt changes. The numbers measure how much the drawing changed.');
+    }
+  }
   project = fitTrace(samples);
   view?.setTarget(samples);
-  const before = summarize(samples, 'baseline');
-  const after = summarize(samples, 'filtered');
-  for (const [kind, metrics] of [['baseline', before], ['filtered', after]]) {
-    for (const [metric, value] of Object.entries(metrics)) byId(kind + '-' + metric).textContent = number.format(value);
-  }
-  const difference = after.rms - before.rms;
-  const result = byId('interpretation');
-  if (Math.abs(difference) < 0.0005) {
-    result.textContent = phrase('El error RMS es prácticamente igual.', 'RMS error is effectively the same.');
-  } else if (difference < 0) {
-    result.textContent = phrase('Menor error RMS después del filtro en esta prueba.', 'Lower RMS error after filtering in this test.');
-  } else {
-    result.textContent = phrase('Mayor error RMS después del filtro en esta prueba.', 'Higher RMS error after filtering in this test.');
-  }
   render(frame);
 }
 
@@ -147,6 +202,7 @@ function setStage(nextStage, focus) {
   document.body.dataset.stage = stage;
   document.body.dataset.mode = advanced ? 'advanced' : 'demo';
   byId('steps').hidden = advanced;
+  byId('intent-panel').hidden = advanced || (stage !== 'draw' && stage !== 'compare');
   byId('drawing').hidden = !advanced && stage !== 'draw';
   byId('results').hidden = !advanced && stage !== 'compare' && stage !== 'intro';
   byId('visualization').hidden = !advanced && stage !== 'visualize';
@@ -217,6 +273,7 @@ toggle.addEventListener('click', () => {
   advanced = !advanced;
   toggle.setAttribute('aria-pressed', String(advanced));
   toggle.textContent = advanced ? phrase('Modo demostración', 'Demonstration mode') : phrase('Modo avanzado', 'Advanced mode');
+  refresh();
   setStage(advanced || stage === 'intro' ? 'compare' : stage);
 });
 play.addEventListener('click', () => {
@@ -226,6 +283,12 @@ play.addEventListener('click', () => {
 seek.addEventListener('input', () => { pause(); render(+seek.value); });
 motion.addEventListener('change', () => render(frame));
 for (const input of [noise, alpha]) input.addEventListener('input', refresh);
+for (const option of document.querySelectorAll('[name="intent"]')) {
+  option.addEventListener('change', () => {
+    intent = option.value;
+    refresh();
+  });
+}
 byId('reset').addEventListener('click', () => {
   pause();
   frame = 0;

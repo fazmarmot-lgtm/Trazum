@@ -78,9 +78,12 @@ export function setupDrawing({ onReference }) {
 
   document.getElementById('use-drawing').addEventListener('click', () => {
     const { minX, maxX, minY, maxY } = DRAW_AREA;
+    const scale = Math.min((maxX - minX) / pad.width, (maxY - minY) / pad.height);
+    const centerX = (minX + maxX) / 2;
+    const centerY = (minY + maxY) / 2;
     const target = resampleTrace(points.map(({ x, y }) => ({
-      x: minX + (maxX - minX) * x / pad.width,
-      y: maxY - (maxY - minY) * y / pad.height,
+      x: centerX + (x - pad.width / 2) * scale,
+      y: centerY - (y - pad.height / 2) * scale,
     })));
     if (!target) {
       report(phrase('Dibujá un trazo más largo o marcá dos puntos separados.', 'Draw a longer stroke or add two separated points.'));

@@ -125,9 +125,11 @@ export function createView(container) {
     },
     setTarget(samples) {
       targetLine.geometry.dispose();
-      targetLine.geometry = new THREE.BufferGeometry().setFromPoints(samples.map(({ target }) =>
-        new THREE.Vector3(target.x, target.y, -0.015),
-      ));
+      targetLine.visible = samples[0].target !== null;
+      const targetPoints = targetLine.visible
+        ? samples.map(({ target }) => new THREE.Vector3(target.x, target.y, -0.015))
+        : [];
+      targetLine.geometry = new THREE.BufferGeometry().setFromPoints(targetPoints);
       for (const [name, trail] of Object.entries(trails)) {
         trail.geometry.dispose();
         trail.geometry = new THREE.BufferGeometry().setFromPoints(samples.map((sample) =>

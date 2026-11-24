@@ -2,11 +2,11 @@
 
 ## ¿Qué puedo probar ahora?
 
-Preparé un simulador donde podés dibujar un trazo propio y ver cómo lo sigue el lápiz virtual con la entrada original y con la salida filtrada. También dejé un lazo de ejemplo para repetir la misma comparación. [Demostración](DEMO.md)
+Preparé un simulador donde podés dibujar un trazo propio y elegir si querés enderezarlo o suavizarlo y ver ambos recorridos. También dejé un lazo de ejemplo para repetir la misma comparación. [Demostración](DEMO.md)
 
 ## ¿La corrección predice lo que quiero escribir?
 
-En esta demo el filtro usa la posición actual y las muestras anteriores. El trazo de referencia sirve para medir el error. Para estimar un movimiento futuro tendría que integrar sensores y comprobar un método de predicción con datos reales.
+En la demostración elegís si querés una recta o una curva más suave. En el modo avanzado, el filtro usa la posición actual y las muestras anteriores. El trazo de referencia sirve para medir el error. Para estimar un movimiento futuro tendría que integrar sensores y comprobar un método de predicción con datos reales.
 
 ## ¿Qué probaste físicamente?
 
