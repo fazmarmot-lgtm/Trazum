@@ -6,7 +6,7 @@
 2. En **Comparar**, muestro la entrada en naranja y la salida filtrada en azul. Ambas se animan con el mismo reloj y la misma escala. La línea verde punteada es el objetivo. El RMS y el máximo se calculan sobre las 121 muestras en unidades virtuales.
 3. Elijo **Ver en 3D**. La punta del lápiz sigue la trayectoria seleccionada antes o después de filtrar. La mano es conceptual. El reloj de reproducción sigue siendo el mismo. Puedo pausar, moverme a un momento del trazo o volver a la comparación.
 
-Con los valores de ejemplo, el RMS pasa de **0,176 a 0,144** y el error máximo de **0,250 a 0,239**. El filtro solo recibe las posiciones de entrada actuales y anteriores. Uso el trazo para generar la entrada y medir el error. [Base teórica](docs/BASE_TEORICA.md)
+Con los valores de ejemplo, el RMS pasa de **0,114 a 0,104** y el error máximo de **0,162 a 0,141**. El filtro solo recibe las posiciones de entrada actuales y anteriores. Uso el trazo para generar la entrada y medir el error. [Base teórica](docs/BASE_TEORICA.md)
 
 ## Modo avanzado
 

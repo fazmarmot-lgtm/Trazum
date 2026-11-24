@@ -39,7 +39,7 @@ npm run preview
 
 | Evidence | Result | Scope |
 | --- | --- | --- |
-| Public simulator | 121 reproducible samples. Default RMS error is 0.176 for the input and 0.144 after filtering. | Synthetic case with a known target. |
+| Public simulator | 121 reproducible samples. Default RMS error is 0.114 for the input and 0.104 after filtering. | Synthetic case with a known target. |
 | Printed index finger | I assembled and flexed a six-piece prototype by hand on a bench. | Qualitative observation of one unit. |
 | Digital audits | I checked 192 index configurations and 45 full-hand poses. I found no interferences in those samples. | The reports match the meshes for the audited revisions. |
 

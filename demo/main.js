@@ -67,8 +67,8 @@ function fitTrace(run) {
   const minY = Math.min(...ys);
   const maxY = Math.max(...ys);
   const { width, height } = plots[0].canvas;
-  const scale = Math.min((width - 66) / Math.max(0.2, maxX - minX),
-    (height - 48) / Math.max(0.2, maxY - minY));
+  const scale = Math.min((width - 66) / Math.max(0.025, maxX - minX),
+    (height - 48) / Math.max(0.025, maxY - minY));
   return ({ x, y }) => [
     width / 2 + (x - (minX + maxX) / 2) * scale,
     height / 2 - (y - (minY + maxY) / 2) * scale,
@@ -96,9 +96,9 @@ function drawPlots() {
   for (const { canvas, context, paths } of plots) {
     if (canvas.id === 'trace' && !advanced) continue;
     context.clearRect(0, 0, canvas.width, canvas.height);
+    for (const kind of paths) drawPath(context, kind, end);
     drawPath(context, 'target', SAMPLE_COUNT - 1);
     for (const kind of paths) {
-      drawPath(context, kind, end);
       if (preview) continue;
       context.beginPath();
       context.fillStyle = colors[kind];
@@ -117,7 +117,7 @@ function render(index) {
 }
 
 function refresh() {
-  byId('noise-value').textContent = number.format(+noise.value / 100);
+  byId('noise-value').textContent = noise.value + '%';
   byId('alpha-value').textContent = alpha.value + '%';
   byId('current-reference').textContent = reference
     ? phrase('Objetivo: tu trazo.', 'Target: your stroke.')

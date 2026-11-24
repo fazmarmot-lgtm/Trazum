@@ -52,7 +52,7 @@
           <h2 id="result-title" tabindex="-1" data-en="Before and after filtering">Antes y después del filtro</h2>
           <p id="current-reference" class="note"></p>
         </div>
-        <p class="key" data-en="Dashed line: target stroke">Línea punteada: trazo objetivo</p>
+        <p class="key" data-en="Dashed green line: reference stroke">Línea verde punteada: tu trazo de referencia</p>
       </div>
       <div id="comparison" class="comparison">
         <article class="trace-card input-card">
@@ -89,8 +89,9 @@
 
     <details class="settings panel" id="settings" hidden open>
       <summary data-en="Experiment settings">Ajustes de la prueba</summary>
-      <label for="noise"><span data-en="Disturbance">Perturbación</span><output id="noise-value" for="noise"></output></label>
-      <input id="noise" type="range" min="0" max="30" value="20">
+      <label for="noise"><span data-en="Side-to-side disturbance">Perturbación lateral</span><output id="noise-value" for="noise"></output></label>
+      <input id="noise" type="range" min="0" max="12" value="8">
+      <p class="note" data-en="The percentage sets the maximum offset relative to the diagonal of the stroke’s bounds.">El porcentaje fija el desvío máximo según la diagonal que ocupa el trazo.</p>
       <label for="alpha"><span data-en="Weight of the new sample (α)">Peso de la muestra nueva (α)</span><output id="alpha-value" for="alpha"></output></label>
       <input id="alpha" type="range" min="5" max="100" value="35">
       <p class="note" data-en="A lower weight smooths more and may add lag. At 100% the output follows the input directly.">Un peso bajo suaviza más y puede sumar atraso. Al 100 % la salida sigue la entrada directamente.</p>

@@ -17,7 +17,7 @@ En la prueba física observé cómo se armaba y se movía un índice impreso. To
 
 Los informes digitales del índice y de la mano compacta registran 192 y 45 posturas, respectivamente, con cero interferencias en las muestras examinadas. Verifiqué que los hashes de los informes coinciden con los STL de las dos revisiones.
 
-En el lazo de ejemplo con perturbación 0,20 y peso 0,35, obtuve un RMS de 0,176 en la entrada y 0,144 en la salida filtrada. Con perturbación cero, el RMS pasó de 0,000 a 0,068. Uso ambos casos para estudiar el compromiso entre suavizar y seguir el trazo a tiempo. [Base teórica](BASE_TEORICA.md)
+En el lazo de ejemplo con perturbación lateral del 8 % y peso 0,35, obtuve un RMS de 0,114 en la entrada y 0,104 en la salida filtrada. Con perturbación cero, el RMS pasó de 0,000 a 0,068. Uso ambos casos para estudiar el compromiso entre suavizar y seguir el trazo a tiempo. [Base teórica](BASE_TEORICA.md)
 
 ## Qué sigue
 

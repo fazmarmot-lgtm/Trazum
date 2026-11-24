@@ -39,7 +39,7 @@ npm run preview
 
 | Evidencia | Resultado | Alcance |
 | --- | --- | --- |
-| Simulador público | 121 muestras reproducibles. Con los valores iniciales, el error RMS es 0,176 para la entrada y 0,144 con el filtro. | Caso sintético con trayectoria conocida. |
+| Simulador público | 121 muestras reproducibles. Con los valores iniciales, el error RMS es 0,114 para la entrada y 0,104 con el filtro. | Caso sintético con trayectoria conocida. |
 | Índice impreso | Armé y flexioné a mano un índice de seis piezas en mesa. | Observación cualitativa de una unidad. |
 | Auditorías digitales | Revisé 192 configuraciones del índice y 45 posturas de la mano compacta sin encontrar interferencias en esas muestras. | Los informes coinciden con las mallas de esas revisiones. |
 

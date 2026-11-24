@@ -8,15 +8,15 @@ Quiero saber cuándo un filtro que solo recibe muestras de posición puede reduc
 
 Uso un lazo de ejemplo o un trazo que dibujo. En el trazo libre reparto **121 puntos por distancia recorrida** y los reproduzco en **4 segundos**. Entre muestras transcurren 1/30 s. La velocidad con la que dibujé en el lienzo no se conserva.
 
-Llamo `r[k]` al punto objetivo en la muestra `k`. Para fabricar una entrada reproducible le sumo dos oscilaciones:
+Llamo `r[k]` al punto objetivo en la muestra `k`. Para generar la entrada, estimo la dirección local a partir de los puntos vecinos y agrego una oscilación perpendicular a ella.
 
 ```text
-φ[k] = 2πk/120
-n[k] = (A·sin(7φ[k]), 0,75A·sin(11φ[k] + 0,4))
-z[k] = r[k] + n[k]
+D = √((xmax − xmin)² + (ymax − ymin)²)
+φ[k] = 2π·9k/120
+z[k] = r[k] + A·D·sin(φ[k])·n[k]
 ```
 
-`A` es la amplitud en unidades virtuales. Las oscilaciones tienen 7 y 11 ciclos en 4 s, equivalentes a 1,75 y 2,75 Hz. Elegí estas señales para poder repetir el mismo ensayo. Todavía no medí si representan el ruido de un sensor real o el movimiento de una persona.
+`n[k]` es el vector unitario perpendicular a la dirección local. Si no puedo definir una dirección local, dejo esa muestra sin desvío. `A` es el porcentaje de la diagonal `D` expresado como proporción. Con el valor inicial de 8 %, el desvío máximo es el 8 % de esa diagonal. Así, un trazo más chico recibe una perturbación más chica. En una recta, la perturbación solo mueve la punta hacia los lados. La señal tiene 9 ciclos en 4 segundos (2,25 Hz). Uso esta señal reproducible como ejemplo. Todavía no medí si representa el ruido de un sensor real o el movimiento de una persona.
 
 ## 2. Qué sabe el filtro
 
@@ -35,10 +35,10 @@ En cada instante calculo la distancia euclidiana entre la posición y el objetiv
 
 | Trazo de ejemplo, α = 0,35 | RMS entrada | RMS filtrada | Máximo entrada | Máximo filtrado |
 | --- | ---: | ---: | ---: | ---: |
-| Amplitud 0,20 | 0,176 | 0,144 | 0,250 | 0,239 |
-| Amplitud 0 | 0,000 | 0,068 | 0,000 | 0,082 |
+| Perturbación lateral 8 % | 0,114 | 0,104 | 0,162 | 0,141 |
+| Perturbación lateral 0 % | 0,000 | 0,068 | 0,000 | 0,082 |
 
-Con perturbación, el RMS baja aproximadamente un **18 %** en este caso. Al quitarla, la entrada ya coincide con el objetivo y el filtrado añade error. Probar otro dibujo puede cambiar el resultado: los giros y la velocidad del recorrido cambian cuánto pesa el atraso.
+Con perturbación, el RMS baja aproximadamente un **9 %** en este caso. Al quitarla, la entrada ya coincide con el objetivo y el filtrado añade error. Probar otro dibujo puede cambiar el resultado: los giros y la velocidad del recorrido cambian cuánto pesa el atraso.
 
 ## 4. Qué representa el 3D
 

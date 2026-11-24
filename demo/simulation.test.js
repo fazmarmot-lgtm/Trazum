@@ -35,7 +35,7 @@ test('metrics measure same-time Euclidean error without time alignment', () => {
 test('the stylus reaches each sample across the full allowed disturbance range', () => {
   const upper = 2.18;
   const lower = 1.77;
-  for (const sample of simulate({ disturbance: 0.30, alpha: 0.35 })) {
+  for (const sample of simulate({ disturbance: 0.12, alpha: 0.35 })) {
     for (const point of Object.values(sample)) {
       const { shoulder, elbow } = jointAngles(point, upper, lower);
       const x = upper * Math.cos(shoulder) + lower * Math.cos(shoulder + elbow);
@@ -67,7 +67,7 @@ test('the drawing area remains reachable at the highest perturbation', () => {
   for (const x of [minX, maxX]) {
     for (const y of [minY, maxY]) {
       const path = Array.from({ length: SAMPLE_COUNT }, () => ({ x, y }));
-      for (const { baseline, filtered } of simulate({ ...DEFAULTS, disturbance: 0.30 }, path)) {
+      for (const { baseline, filtered } of simulate({ ...DEFAULTS, disturbance: 0.12 }, path)) {
         for (const point of [baseline, filtered]) {
           const distance = Math.hypot(point.x, point.y);
           assert.ok(distance > upper - lower && distance < upper + lower);
@@ -75,4 +75,24 @@ test('the drawing area remains reachable at the highest perturbation', () => {
       }
     }
   }
+});
+
+test('a short straight stroke keeps its forward motion and only gets proportional sideways disturbance', () => {
+  const length = 0.08;
+  const path = resampleTrace([{ x: 2.2, y: 0.8 }, { x: 2.2 + length, y: 0.8 }]);
+  const run = simulate(DEFAULTS, path);
+
+  for (const { target, baseline } of run) {
+    assert.equal(baseline.x, target.x);
+    assert.ok(Math.abs(baseline.y - target.y) <= length * DEFAULTS.disturbance + 1e-12);
+  }
+  assert.ok(summarize(run, 'baseline').peak > length * DEFAULTS.disturbance * 0.95);
+});
+
+test('shortening a stroke proportionally reduces its input error', () => {
+  const trace = (length) => resampleTrace([{ x: 2, y: 0.2 }, { x: 2 + length, y: 0.2 + length }]);
+  const small = summarize(simulate(DEFAULTS, trace(0.1)), 'baseline');
+  const large = summarize(simulate(DEFAULTS, trace(1)), 'baseline');
+  assert.ok(Math.abs(large.rms / small.rms - 10) < 1e-10);
+  assert.ok(Math.abs(large.peak / small.peak - 10) < 1e-10);
 });
