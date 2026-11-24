@@ -1,6 +1,6 @@
 export const SAMPLE_COUNT = 121;
 export const DURATION = 4;
-export const DEFAULTS = Object.freeze({ disturbance: 0.20, strength: 0.65 });
+export const DEFAULTS = Object.freeze({ disturbance: 0.20, alpha: 0.35 });
 
 export const DRAW_AREA = Object.freeze({ minX: 2.00, maxX: 3.05, minY: 0.05, maxY: 1.65 });
 
@@ -30,8 +30,20 @@ export function resampleTrace(points) {
   });
 }
 
-export function simulate({ disturbance, strength }, reference) {
-  return Array.from({ length: SAMPLE_COUNT }, (_, index) => {
+export function filterMeasurements(measurements, alpha) {
+  let previous;
+  return measurements.map((current) => {
+    const weight = 1 - alpha;
+    previous = previous === undefined ? current : {
+      x: alpha * current.x + weight * previous.x,
+      y: alpha * current.y + weight * previous.y,
+    };
+    return previous;
+  });
+}
+
+export function simulate({ disturbance, alpha }, reference) {
+  const samples = Array.from({ length: SAMPLE_COUNT }, (_, index) => {
     const phase = 2 * Math.PI * index / (SAMPLE_COUNT - 1);
     const target = reference?.[index] ?? { x: 2.65 + 0.55 * Math.sin(phase), y: 0.90 + 0.85 * Math.cos(phase) };
     const dx = disturbance * Math.sin(7 * phase);
@@ -39,9 +51,10 @@ export function simulate({ disturbance, strength }, reference) {
     return {
       target,
       baseline: { x: target.x + dx, y: target.y + dy },
-      guided: { x: target.x + dx * (1 - strength), y: target.y + dy * (1 - strength) },
     };
   });
+  const filtered = filterMeasurements(samples.map(({ baseline }) => baseline), alpha);
+  return samples.map((sample, index) => ({ ...sample, filtered: filtered[index] }));
 }
 
 export function summarize(samples, mode) {

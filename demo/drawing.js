@@ -1,3 +1,4 @@
+import { phrase } from './language.js';
 import { DRAW_AREA, resampleTrace } from './simulation.js';
 
 export function setupDrawing({ onReference }) {
@@ -7,7 +8,7 @@ export function setupDrawing({ onReference }) {
   let points = [];
   let pointer;
   const cursor = { x: pad.width / 2, y: pad.height / 2 };
-  let active = 'example loop';
+  let active = phrase('trazo de ejemplo', 'example stroke');
 
   function draw() {
     context.clearRect(0, 0, pad.width, pad.height);
@@ -29,7 +30,7 @@ export function setupDrawing({ onReference }) {
   }
 
   function report(message = '') {
-    status.textContent = [message, 'Active reference: ' + active + '.'].filter(Boolean).join(' ');
+    status.textContent = [message, phrase('Trazo activo: ', 'Active stroke: ') + active + '.'].filter(Boolean).join(' ');
   }
 
   function appendPointer(event) {
@@ -82,21 +83,22 @@ export function setupDrawing({ onReference }) {
       y: maxY - (maxY - minY) * y / pad.height,
     })));
     if (!target) {
-      report('Draw a longer stroke or add at least two separated points.');
+      report(phrase('Dibujá un trazo más largo o marcá dos puntos separados.', 'Draw a longer stroke or add two separated points.'));
       return;
     }
     onReference(target);
-    active = 'your drawing';
+    active = phrase('tu dibujo', 'your drawing');
     report();
   });
   document.getElementById('clear-drawing').addEventListener('click', () => {
     points = [];
     draw();
-    report('Drawing pad cleared.');
+    report(phrase('Dibujo borrado.', 'Drawing cleared.'));
   });
   document.getElementById('use-example').addEventListener('click', () => {
     onReference(undefined);
-    active = 'example loop';
+    active = phrase('trazo de ejemplo', 'example stroke');
     report();
   });
+  report();
 }

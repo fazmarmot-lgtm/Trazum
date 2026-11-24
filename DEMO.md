@@ -1,17 +1,13 @@
 # Cómo muestro Trazum
 
-Primero abro el [simulador público](README.md#ejecutarlo-en-tu-equipo). En **Draw my own path** dibujo un trazo continuo con el mouse, el dedo o un lápiz táctil. También puedo mover el cursor con las flechas y usar la barra espaciadora para marcar puntos.
+## La prueba de escritura
 
-Elijo **Use my path** y después **Run**. Puedo cambiar **Motion shown in 3D** para ver el recorrido sin corrección o el que se acerca al trazo. En el gráfico comparo ambos sobre el mismo dibujo. Si quiero volver al lazo inicial, uso **Use example loop**.
+1. Abro el [simulador](README.md#ejecutarlo-en-tu-equipo) y toco **Reproducir comparación**. El objetivo es el trazo verde punteado. En naranja veo la entrada con perturbación y en azul la salida filtrada. El lápiz 3D muestra el movimiento seleccionado.
+2. Señalo la tabla. Con el ejemplo inicial, el error RMS pasa de **0,176 a 0,144** unidades virtuales. El filtro recibe posiciones simuladas y usa las muestras presentes y anteriores.
+3. Abro **Ajustes de la prueba** y llevo **Perturbación** a 0. La entrada ahora coincide con el objetivo y el filtrado agrega atraso. El RMS pasa de **0,000 a 0,068**. Vuelvo a los valores iniciales con **Reiniciar**.
+4. Toco **Dibujar mi trazo**, dibujo una L de un solo movimiento y elijo **Reproducir mi trazo**. La comparación arranca sola. También puedo usar las flechas y la barra espaciadora para marcar puntos.
 
-Con los parámetros iniciales veo estos resultados. La unidad es virtual.
-
-| Error | Sin corrección | Con corrección |
-| --- | ---: | ---: |
-| RMS | 0,176 | 0,062 |
-| Pico | 0,250 | 0,087 |
-
-Como control, bajo la corrección a 0 %. En ese caso las dos columnas coinciden. La demo usa el trazo como referencia conocida, así que esta prueba me permite comparar el seguimiento de un objetivo. Para estimar un movimiento de escritura a partir de sensores necesitaría otra prueba.
+Puedo cambiar a **English** arriba. Para el video, explico que el filtro no sabe lo que quiero escribir. El trazo se usa para fabricar y evaluar una entrada reproducible. [Base teórica](docs/BASE_TEORICA.md)
 
 ## Qué muestro del prototipo físico
 
@@ -19,4 +15,4 @@ Imprimí y probé un índice sobre una mesa. Puedo mostrar cómo se flexiona a m
 
 ## Video
 
-Voy a sumar el enlace del video a esta página cuando esté listo. En la grabación quiero mostrar el dibujo, activar la comparación y explicar qué aprendí con el índice y qué falta probar. [Reglas de STEM2Connect](https://stem2connect-online-hackathon.devpost.com/rules)
+Voy a sumar el enlace cuando termine de grabarlo. [Reglas de STEM2Connect](https://stem2connect-online-hackathon.devpost.com/rules)

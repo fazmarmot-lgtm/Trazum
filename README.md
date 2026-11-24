@@ -12,9 +12,9 @@ Soy Lautaro Verón. Empecé Trazum como estudiante, a los 15 años. Mi objetivo 
 
 ## Qué preparé para que lo puedas probar
 
-Hice un simulador con dos articulaciones y un lápiz virtual. En **Draw my own path** podés dibujar un trazo y ver cómo lo sigue el lápiz con y sin corrección. También dejé un lazo de ejemplo. Uso el mismo nivel de perturbación en las dos corridas, y el gráfico muestra los errores RMS y máximo.
+Hice un simulador con dos articulaciones y un lápiz virtual. En **Dibujar mi trazo** podés dibujar y comparar la entrada perturbada con la salida filtrada. También dejé un lazo de ejemplo. Uso el mismo nivel de perturbación en las dos corridas, y el gráfico muestra los errores RMS y máximo.
 
-Para hacer la comparación, le doy a la corrección el trazo como referencia. Trabajo con unidades virtuales y uso JavaScript, Three.js, Vite y Canvas 2D. [Cómo construí el simulador](docs/ARQUITECTURA.md)
+El filtro usa las muestras de posición actuales y anteriores. Uso el trazo como referencia para generar la entrada y evaluar el resultado. [Base teórica](docs/BASE_TEORICA.md) · [Arquitectura](docs/ARQUITECTURA.md)
 
 ### Ejecutarlo en tu equipo
 
@@ -39,7 +39,7 @@ npm run preview
 
 | Evidencia | Resultado | Alcance |
 | --- | --- | --- |
-| Simulador público | 121 muestras reproducibles. Con los valores iniciales, el error RMS es 0,176 sin corrección y 0,062 con corrección. | Caso sintético con trayectoria conocida. |
+| Simulador público | 121 muestras reproducibles. Con los valores iniciales, el error RMS es 0,176 para la entrada y 0,144 con el filtro. | Caso sintético con trayectoria conocida. |
 | Índice impreso | Armé y flexioné a mano un índice de seis piezas en mesa. | Observación cualitativa de una unidad. |
 | Auditorías digitales | Revisé 192 configuraciones del índice y 45 posturas de la mano compacta sin encontrar interferencias en esas muestras. | Los informes coinciden con las mallas de esas revisiones. |
 
@@ -47,6 +47,6 @@ Todavía tengo que integrar sensores y motores, y comprobar si puedo estimar el 
 
 ## IA y presentación
 
-Usé ChatGPT/Codex para desarrollo y documentación, y Claude y DeepSeek para revisar el diseño y los informes. La demo aplica cinemática y una corrección matemática sin modelos entrenados ni APIs de IA. [Declaración de IA](docs/USO_DE_IA.md)
+Usé ChatGPT/Codex para desarrollo y documentación, y Claude y DeepSeek para revisar el diseño y los informes. La demo aplica cinemática y suavizado exponencial sin modelos entrenados ni APIs de IA. [Declaración de IA](docs/USO_DE_IA.md)
 
 Voy a sumar el enlace al video cuando esté listo. [Guion y evidencia](DEMO.md) · [Preguntas del jurado](PREGUNTAS.md)

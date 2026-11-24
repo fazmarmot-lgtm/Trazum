@@ -2,11 +2,11 @@
 
 ## ¿Qué puedo probar ahora?
 
-Preparé un simulador donde podés dibujar un trazo propio y ver cómo lo sigue el lápiz virtual con y sin corrección. También dejé un lazo de ejemplo para repetir la misma comparación. [Demostración](DEMO.md)
+Preparé un simulador donde podés dibujar un trazo propio y ver cómo lo sigue el lápiz virtual con la entrada original y con la salida filtrada. También dejé un lazo de ejemplo para repetir la misma comparación. [Demostración](DEMO.md)
 
 ## ¿La corrección predice lo que quiero escribir?
 
-Para esta demo le doy al programa el trazo como referencia. Así puedo probar cómo corrige una perturbación conocida. Para reconocer un movimiento futuro tendría que integrar los sensores y comprobar un método de estimación con datos reales.
+En esta demo el filtro usa la posición actual y las muestras anteriores. El trazo de referencia sirve para medir el error. Para estimar un movimiento futuro tendría que integrar sensores y comprobar un método de predicción con datos reales.
 
 ## ¿Qué probaste físicamente?
 
@@ -14,7 +14,7 @@ Armé un índice impreso de seis piezas y moví a mano sus tres articulaciones s
 
 ## ¿Usaste IA?
 
-Sí. Usé ChatGPT/Codex para programar y documentar, y Claude y DeepSeek para tener otras revisiones técnicas. El simulador hace cálculos matemáticos con el trazo que le doy. [Declaración de IA](docs/USO_DE_IA.md)
+Sí. Usé ChatGPT/Codex para programar y documentar, y Claude y DeepSeek para tener otras revisiones técnicas. El simulador filtra muestras de posición con cálculos matemáticos. [Declaración de IA](docs/USO_DE_IA.md)
 
 ## ¿Qué vas a hacer después?
 

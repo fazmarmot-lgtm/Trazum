@@ -12,9 +12,9 @@ I'm Lautaro Verón. I started Trazum as a student at age 15. My long-term goal i
 
 ## What I built for you to try
 
-I built a simulator with two joints and a virtual stylus. Open **Draw my own path** to draw a stroke and see how the stylus follows it with and without correction. I also included an example loop. Both runs use the same synthetic disturbance. The plot reports RMS and peak error.
+I built a simulator with two joints and a virtual stylus. Choose **English**, then **Draw my own stroke** to compare the noisy input with the filtered output. I also included an example loop. Both runs use the same synthetic disturbance. The plot reports RMS and peak error.
 
-I give the correction the drawn path as its reference. I measure the results in virtual units. I built the demo with JavaScript, Three.js, Vite, and Canvas 2D. [How I built it](docs/ARQUITECTURA.md)
+The filter uses current and past input samples. I use the reference stroke to generate the input and score each path. [Theory](docs/BASE_TEORICA.md) · [Architecture](docs/ARQUITECTURA.md)
 
 ### Run locally
 
@@ -39,7 +39,7 @@ npm run preview
 
 | Evidence | Result | Scope |
 | --- | --- | --- |
-| Public simulator | 121 reproducible samples. Default RMS error is 0.176 uncorrected and 0.062 with target correction. | Synthetic case with a known target. |
+| Public simulator | 121 reproducible samples. Default RMS error is 0.176 for the input and 0.144 after filtering. | Synthetic case with a known target. |
 | Printed index finger | I assembled and flexed a six-piece prototype by hand on a bench. | Qualitative observation of one unit. |
 | Digital audits | I checked 192 index configurations and 45 full-hand poses. I found no interferences in those samples. | The reports match the meshes for the audited revisions. |
 
@@ -47,6 +47,6 @@ I still need to integrate sensing and motors and test whether I can estimate han
 
 ## AI disclosure and demo video
 
-I used ChatGPT/Codex for development and documentation, and Claude and DeepSeek for technical review. The standalone demo uses classical kinematics and mathematical correction. It has no trained model or AI API dependency. [AI disclosure in Spanish](docs/USO_DE_IA.md)
+I used ChatGPT/Codex for development and documentation, and Claude and DeepSeek for technical review. The standalone demo uses classical kinematics and exponential smoothing. It has no trained model or AI API dependency. [AI disclosure in Spanish](docs/USO_DE_IA.md)
 
 I’ll add the video link once it’s ready. [Demo outline and evidence](DEMO.md) · [Jury Q&A](PREGUNTAS.md)

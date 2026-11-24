@@ -1,48 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="es-AR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b1322">
-<title>Trazum · Handwriting motion lab</title>
+<title>Trazum · Prueba de escritura</title>
 </head>
 <body>
-<header><a class="brand" href="./">Trazum</a><a href="https://github.com/fazmarmot-lgtm/Trazum">Project on GitHub ↗</a></header>
+<header><a class="brand" href="./">Trazum</a><nav><a id="language" href="?lang=en" lang="en">English</a><a href="https://github.com/fazmarmot-lgtm/Trazum">GitHub ↗</a></nav></header>
 <main>
-<section class="intro"><h1>Handwriting motion lab</h1><p>Draw your own path or use the example loop. See how the virtual stylus responds to the same disturbance with and without target correction.</p></section>
-<details class="drawing" id="drawing">
-<summary>Draw my own path</summary>
-<p id="draw-help">Draw one continuous stroke with a mouse, pen, or finger. With a keyboard, use the arrow keys and press Space to add points. Then choose Use my path.</p>
-<canvas id="draw-pad" width="400" height="180" tabindex="0" aria-label="Draw a reference path" aria-describedby="draw-help"></canvas>
+<section class="intro">
+<h1 data-en="Writing motion test">Prueba de escritura</h1>
+<p data-en="A virtual stylus follows a stroke. Try the example or draw your own to see what changes when I filter the motion.">Un lápiz virtual sigue un trazo. Probá el ejemplo o dibujá el tuyo para ver qué cambia cuando filtro el movimiento.</p>
+<div class="row actions">
+<button class="primary" type="button" id="play" data-en="Play comparison">Reproducir comparación</button>
+<button type="button" id="toggle-draw" aria-controls="drawing" aria-expanded="false" data-en="Draw my own stroke">Dibujar mi trazo</button>
+<button type="button" id="reset" data-en="Restart">Reiniciar</button>
+</div>
+</section>
+<section class="drawing" id="drawing" hidden>
+<h2 data-en="Draw one continuous stroke">Dibujá un trazo continuo</h2>
+<p id="draw-help" data-en="Try a letter L. With a keyboard, use the arrows to move and Space to place each point.">Probá con una L. Con teclado, usá las flechas para moverte y la barra espaciadora para marcar cada punto.</p>
+<canvas id="draw-pad" width="400" height="180" tabindex="0" aria-label="Lienzo de dibujo" aria-describedby="draw-help"></canvas>
 <div class="row">
-<button id="use-drawing" type="button" class="primary">Use my path</button>
-<button id="clear-drawing" type="button">Clear drawing</button>
-<button id="use-example" type="button">Use example loop</button>
+<button id="use-drawing" type="button" class="primary" data-en="Play my stroke">Reproducir mi trazo</button>
+<button id="clear-drawing" type="button" data-en="Clear drawing">Borrar dibujo</button>
+<button id="use-example" type="button" data-en="Use example">Usar ejemplo</button>
 </div>
-<p id="draw-status" role="status">Active reference: example loop.</p>
-</details>
+<p id="draw-status" role="status"></p>
+</section>
 <div class="workspace">
-<section class="stage" aria-labelledby="stage-title">
-<h2 id="stage-title">3D mechanism</h2><div id="viewport" role="img" aria-label="Virtual stylus following the selected path"></div>
-<p id="view-status" role="status">Drag to orbit. Scroll or pinch to zoom.</p>
-<div class="row cameras" aria-label="Camera controls"><button id="camera" type="button">Reset view</button><button id="zoom-in" type="button">Zoom in</button><button id="zoom-out" type="button">Zoom out</button></div>
-</section>
-<section class="controls" aria-labelledby="run-title">
-<h2 id="run-title">Run a comparison</h2>
-<label for="mode">Motion shown in 3D</label><select id="mode"><option value="baseline">Uncorrected</option><option value="guided">Target correction</option></select>
-<label for="noise">Synthetic disturbance <output id="noise-value" for="noise"></output></label><input id="noise" type="range" min="0" max="30" value="20">
-<label for="gain">Correction strength <output id="gain-value" for="gain"></output></label><input id="gain" type="range" min="0" max="100" value="65">
-<div class="row"><button type="button" class="primary" id="play">Run</button><button type="button" id="reset">Reset run</button></div>
-<label for="seek">Timeline <output id="time" for="seek"></output></label><input id="seek" type="range" min="0" max="120" value="0">
-<p class="note">The correction uses the selected path as its reference. Measurements describe simulated motion in virtual units.</p>
-</section>
 <section class="results" aria-labelledby="result-title">
-<h2 id="result-title">Trace comparison</h2><canvas id="trace" width="360" height="240" role="img" aria-label="Target, uncorrected, and corrected paths"></canvas>
-<ul class="legend"><li>Target</li><li>Uncorrected</li><li>Target correction</li></ul>
-<table><caption>Error over all 121 samples (virtual units)</caption><thead><tr><th scope="col">Error</th><th scope="col">Uncorrected</th><th scope="col">Corrected</th></tr></thead><tbody><tr><th scope="row">RMS</th><td id="baseline-rms"></td><td id="guided-rms"></td></tr><tr><th scope="row">Peak</th><td id="baseline-peak"></td><td id="guided-peak"></td></tr></tbody></table>
+<h2 id="result-title" data-en="Compare the paths">Compará los recorridos</h2>
+<p class="note" id="current-reference"></p>
+<canvas id="trace" width="560" height="320" role="img" aria-label="Comparación de trazos"></canvas>
+<ul class="legend"><li data-en="Target">Objetivo</li><li data-en="Input with disturbance">Entrada con perturbación</li><li data-en="Filtered output">Salida filtrada</li></ul>
+<table><caption data-en="Error against the target (virtual units)">Error respecto al objetivo (unidades virtuales)</caption><thead><tr><th scope="col" data-en="Metric">Métrica</th><th scope="col" data-en="Input">Entrada</th><th scope="col" data-en="Filtered">Filtrada</th></tr></thead><tbody><tr><th scope="row">RMS</th><td id="baseline-rms"></td><td id="filtered-rms"></td></tr><tr><th scope="row" data-en="Peak">Máximo</th><td id="baseline-peak"></td><td id="filtered-peak"></td></tr></tbody></table>
+<p id="interpretation" class="note"></p>
+<label for="seek"><span data-en="Timeline">Tiempo</span><output id="time" for="seek"></output></label><input id="seek" type="range" min="0" max="120" value="0">
+</section>
+<section class="stage" aria-labelledby="stage-title">
+<h2 id="stage-title" data-en="Watch the stylus in 3D">Mirá el lápiz en 3D</h2>
+<div id="viewport" role="img" aria-label="Lápiz virtual articulado"></div>
+<span id="view-status" role="status"></span>
+<label for="mode"><span data-en="Motion shown">Movimiento mostrado</span></label>
+<select id="mode"><option value="filtered" data-en="Filtered output">Salida filtrada</option><option value="baseline" data-en="Input with disturbance">Entrada con perturbación</option></select>
+<details class="settings">
+<summary data-en="Experiment settings">Ajustes de la prueba</summary>
+<label for="noise"><span data-en="Disturbance">Perturbación</span><output id="noise-value" for="noise"></output></label>
+<input id="noise" type="range" min="0" max="30" value="20">
+<label for="alpha"><span data-en="Weight of the new sample (α)">Peso de la muestra nueva (α)</span><output id="alpha-value" for="alpha"></output></label>
+<input id="alpha" type="range" min="5" max="100" value="35">
+<p class="note" data-en="A lower weight smooths more, but the stylus can lag at a turn. At 100% it follows the input directly.">Un peso bajo suaviza más, pero el lápiz puede atrasarse en un giro. Al 100 % sigue la entrada directamente.</p>
+<div class="row cameras"><button id="camera" type="button" data-en="Reset camera">Cámara inicial</button><button id="zoom-in" type="button" data-en="Zoom in">Acercar</button><button id="zoom-out" type="button" data-en="Zoom out">Alejar</button></div>
+</details>
 </section>
 </div>
-<footer>Experimental simulation · Standalone public demonstration</footer>
+<footer data-en="Simulation with no physical sensors. I use the target to score the paths. The filter only receives the simulated input.">Simulación sin sensores físicos. Uso el objetivo para medir los recorridos. El filtro solo recibe la entrada simulada.</footer>
 </main>
 <script type="module" src="./demo/main.js"></script>
-</body></html>
+</body>
+</html>

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DEFAULTS, DRAW_AREA, SAMPLE_COUNT, jointAngles, resampleTrace, simulate, summarize } from './simulation.js';
+import { DEFAULTS, DRAW_AREA, SAMPLE_COUNT, filterMeasurements, jointAngles, resampleTrace, simulate, summarize } from './simulation.js';
 
 test('a run uses the same deterministic input and target at each sample', () => {
   const run = simulate(DEFAULTS);
@@ -9,23 +9,33 @@ test('a run uses the same deterministic input and target at each sample', () => 
   assert.ok(Math.abs(run[0].target.x - run.at(-1).target.x) < 1e-12);
 });
 
-test('zero correction matches baseline and perfect correction follows the known target', () => {
-  for (const sample of simulate({ ...DEFAULTS, strength: 0 })) assert.deepEqual(sample.baseline, sample.guided);
-  for (const sample of simulate({ ...DEFAULTS, strength: 1 })) assert.deepEqual(sample.target, sample.guided);
+test('full sample weight bypasses filtering, including after initialization', () => {
+  const run = simulate({ ...DEFAULTS, alpha: 1 });
+  assert.deepEqual(run.map(({ filtered }) => filtered), run.map(({ baseline }) => baseline));
   const stable = simulate({ ...DEFAULTS, disturbance: 0 });
   assert.deepEqual(summarize(stable, 'baseline'), { rms: 0, peak: 0 });
+  assert.ok(summarize(stable, 'filtered').rms > 0);
 });
 
-test('default summary measures Euclidean trace error and reflects correction strength', () => {
+test('filter uses only the input prefix and has the expected step response', () => {
+  const start = { x: 0, y: 0 };
+  const step = { x: 8, y: 4 };
+  const points = [start, step, step, step];
+  const filtered = filterMeasurements(points, 0.5);
+  assert.deepEqual(filtered, [start, { x: 4, y: 2 }, { x: 6, y: 3 }, { x: 7, y: 3.5 }]);
+  assert.deepEqual(filterMeasurements(points.slice(0, 3), 0.5), filtered.slice(0, 3));
+});
+
+test('metrics measure same-time Euclidean error without time alignment', () => {
   assert.deepEqual(summarize([{ target: { x: 0, y: 0 }, baseline: { x: 3, y: 4 } }], 'baseline'), { rms: 5, peak: 5 });
   const run = simulate(DEFAULTS);
-  assert.ok(Math.abs(summarize(run, 'guided').rms / summarize(run, 'baseline').rms - 0.35) < 1e-12);
+  assert.ok(summarize(run, 'filtered').rms < summarize(run, 'baseline').rms);
 });
 
 test('the stylus reaches each sample across the full allowed disturbance range', () => {
   const upper = 2.18;
   const lower = 1.77;
-  for (const sample of simulate({ disturbance: 0.30, strength: 0.65 })) {
+  for (const sample of simulate({ disturbance: 0.30, alpha: 0.35 })) {
     for (const point of Object.values(sample)) {
       const { shoulder, elbow } = jointAngles(point, upper, lower);
       const x = upper * Math.cos(shoulder) + lower * Math.cos(shoulder + elbow);
@@ -57,9 +67,11 @@ test('the drawing area remains reachable at the highest perturbation', () => {
   for (const x of [minX, maxX]) {
     for (const y of [minY, maxY]) {
       const path = Array.from({ length: SAMPLE_COUNT }, () => ({ x, y }));
-      for (const { baseline } of simulate({ ...DEFAULTS, disturbance: 0.30 }, path)) {
-        const distance = Math.hypot(baseline.x, baseline.y);
-        assert.ok(distance > upper - lower && distance < upper + lower);
+      for (const { baseline, filtered } of simulate({ ...DEFAULTS, disturbance: 0.30 }, path)) {
+        for (const point of [baseline, filtered]) {
+          const distance = Math.hypot(point.x, point.y);
+          assert.ok(distance > upper - lower && distance < upper + lower);
+        }
       }
     }
   }

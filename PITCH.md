@@ -4,13 +4,13 @@
 
 Volví de visita a mi antiguo colegio, el Dámaso Centeno, y me contaron que a algunos chicos de primaria les costaba escribir por dificultades motrices. Pensé en eso todo el camino de vuelta. Ese mismo día empecé a trabajar en una idea para ayudarlos.
 
-Estoy investigando cómo un guante articulado podría hacer más estable el movimiento del lápiz. Ya armé un índice de seis piezas y moví a mano sus tres articulaciones sobre una mesa. También preparé un simulador para que cualquiera pueda dibujar un trazo y comparar cómo lo sigue un lápiz virtual con y sin corrección. Mi próximo paso es medir la fuerza y el recorrido del dedo.
+Estoy investigando cómo un guante articulado podría hacer más estable el movimiento del lápiz. Ya armé un índice de seis piezas y moví a mano sus tres articulaciones sobre una mesa. También preparé un simulador para que cualquiera pueda dibujar un trazo y comparar cómo lo sigue un lápiz virtual antes y después de filtrar las muestras de posición. Mi próximo paso es medir la fuerza y el recorrido del dedo.
 
 ## English
 
 I returned to my former school, Dámaso Centeno, and heard that some elementary students had trouble writing because of motor difficulties. I thought about that the whole way home. That same day, I started working on an idea that might help.
 
-I'm exploring how an articulated glove could steady a pencil stroke. I assembled a six-piece finger and moved its three joints by hand on a bench. I also built a public simulator where anyone can draw a path and compare how a virtual stylus follows it with and without correction. My next step is to measure how much force it takes to move the printed finger and how far it travels.
+I'm exploring how an articulated glove could steady a pencil stroke. I assembled a six-piece finger and moved its three joints by hand on a bench. I also built a public simulator where anyone can draw a path and compare how a virtual stylus follows it before and after filtering the position samples. My next step is to measure how much force it takes to move the printed finger and how far it travels.
 
 ## STEM2Connect y Devpost
 
