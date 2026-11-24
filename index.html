@@ -17,11 +17,11 @@
 </header>
 <main class="shell">
   <section id="intro" class="intro">
-    <h1 data-en="Draw a shaky line. See it straighten.">Dibujá una línea irregular. Mirá cómo se endereza.</h1>
-    <p class="lede" data-en="Trazum works on your stroke. Choose a straight line or a smoother curve and compare the result with your drawing.">Trazum trabaja sobre tu dibujo. Elegí una recta o una curva más suave y compará el resultado con tu trazo.</p>
+    <h1 data-en="How could Trazum steady a letter?">¿Cómo ayudaría Trazum a estabilizar una letra?</h1>
+    <p class="lede" data-en="Try writing an L. Virtual angle sensors measure the movement and two virtual motors apply a limited correction.">Probá escribir una L. Dos sensores de ángulo virtuales miden el movimiento y dos motores virtuales aplican una corrección limitada.</p>
     <div class="actions">
       <button class="primary" type="button" id="start-demo" data-en="Start demonstration">Iniciar demostración</button>
-      <button type="button" id="quick-example" data-en="Try the example">Probar el ejemplo</button>
+      <button type="button" id="quick-example" data-en="Try the letter L">Probar la letra L</button>
     </div>
   </section>
 
@@ -31,18 +31,13 @@
     <li data-step="visualize"><span aria-hidden="true">3</span><b data-en="View in 3D">Visualizar</b></li>
   </ol>
 
-  <fieldset id="intent-panel" class="intent" hidden>
-    <legend data-en="What do you want to draw?">¿Qué querés dibujar?</legend>
-    <label><input type="radio" name="intent" value="line" checked><span data-en="A straight line">Una recta</span></label>
-    <label><input type="radio" name="intent" value="smooth"><span data-en="A smoother curve">Una curva más suave</span></label>
-  </fieldset>
   <section class="drawing panel" id="drawing" hidden aria-labelledby="draw-title">
     <div class="draw-copy">
       <h2 id="draw-title" tabindex="-1" data-en="Draw one continuous stroke">Dibujá un trazo continuo</h2>
-      <p id="draw-help" data-en="Try a shaky horizontal line from left to right. With a keyboard, use the arrows and Space to place points.">Probá una línea irregular de izquierda a derecha. Con teclado, usá las flechas y Espacio para marcar puntos.</p>
+      <p id="draw-help" data-en="Draw an L without lifting the pointer, or try your own one-stroke letter. With a keyboard, use the arrows and Space to place points.">Dibujá una L sin levantar el puntero o probá tu propia letra de un solo trazo. Con teclado, usá las flechas y Espacio para marcar puntos.</p>
       <div class="actions">
-        <button id="use-drawing" type="button" class="primary" data-en="Apply assistance">Aplicar ayuda</button>
-        <button id="use-example" type="button" data-en="Use example stroke">Usar trazo de ejemplo</button>
+        <button id="use-drawing" type="button" class="primary" data-en="Simulate assistance">Simular asistencia</button>
+        <button id="use-example" type="button" data-en="Use example letter">Usar letra de ejemplo</button>
         <button id="clear-drawing" type="button" data-en="Clear drawing">Borrar dibujo</button>
       </div>
       <p id="draw-status" class="note" role="status"></p>
@@ -79,6 +74,13 @@
       </div>
       <div id="overlay" hidden><p class="overlay-key"><span class="before" data-en="Before filtering">Antes del filtro</span><span class="after" data-en="After filtering">Después del filtro</span></p><canvas id="trace" width="640" height="300" role="img" aria-label="Trayectorias superpuestas"></canvas></div>
       <div class="result-note"><p id="interpretation"></p><span data-en="Values in virtual units">Valores en unidades virtuales</span></div>
+      <details id="hardware" class="hardware" hidden>
+        <summary data-en="Sensors and motors · virtual model">Sensores y motores · modelo virtual</summary>
+        <p id="hardware-config" class="note"></p>
+        <p id="hardware-readout" class="note"></p>
+        <label for="drive"><span data-en="Assistance level">Nivel de asistencia</span><output id="drive-value" for="drive">100%</output></label>
+        <input id="drive" type="range" min="0" max="100" value="100">
+      </details>
     </section>
 
     <section class="stage panel" id="visualization" aria-labelledby="stage-title" hidden>

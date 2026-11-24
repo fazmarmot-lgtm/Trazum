@@ -7,7 +7,7 @@
 | 5 de noviembre de 2026 | Escribí a mi antiguo colegio para contarles la idea y ofrecerme a mostrar el prototipo. |
 | 11 de noviembre de 2026 | Ya tenía un candidato digital del índice R8 con encastres y guía para el carro. En esa etapa revisé trayectorias y posturas del modelo. |
 | Noviembre de 2026 | Imprimí un índice de seis piezas, lo armé y moví a mano sus tres articulaciones. En una de las pruebas noté algo de juego en un encastre. |
-| Noviembre de 2026 | Preparé el simulador público independiente. Empecé con un lazo de ejemplo y después agregué la opción de dibujar un trazo propio y un filtro que usa las muestras de posición. |
+| Noviembre de 2026 | Preparé el simulador público independiente. Empecé con un lazo de ejemplo y después agregué la opción de dibujar un trazo propio y un filtro que usa las muestras de posición. Para mostrar la asistencia sobre una letra, preparé una L con un modelo de sensores y motores virtuales. |
 
 El programa STEM2Connect empezó el 11 de octubre. El primer registro fechado que tengo es posterior. La fecha exacta en que surgió la idea queda abierta. [Ficha para Devpost](../PITCH.md#stem2connect-y-devpost)
 

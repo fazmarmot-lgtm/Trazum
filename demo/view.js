@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { jointAngles } from './simulation.js';
+import { LINKS } from './assistance.js';
 
 export function createView(container) {
   const scene = new THREE.Scene();
@@ -38,8 +39,7 @@ export function createView(container) {
   board.position.z = -0.025;
   scene.add(board);
 
-  const upper = 2.18;
-  const lower = 1.77;
+  const { upper, lower } = LINKS;
   const armMaterial = new THREE.MeshStandardMaterial({ color: 0x72b3fa, metalness: 0.12, roughness: 0.46 });
   const jointMaterial = new THREE.MeshStandardMaterial({ color: 0xe4efff, roughness: 0.36 });
   function mesh(parent, geometry, material, x = 0) {

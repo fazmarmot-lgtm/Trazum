@@ -1,16 +1,13 @@
 # Cómo construí el simulador público
 
-Uso JavaScript para conectar el dibujo, el gráfico Canvas 2D y el visor Three.js. En el modo avanzado uso dos articulaciones y un lápiz virtual. En el modo demostración muestro una mano conceptual y un lápiz con formas geométricas simples.
-
 | Archivo | Qué implementé |
 | --- | --- |
-| [`index.html`](../index.html) y [`demo/style.css`](../demo/style.css) | La interfaz, el lienzo y los controles. |
-| [`demo/language.js`](../demo/language.js) | La opción de ver la interfaz en español o en inglés. |
+| [`index.html`](../index.html) y [`demo/style.css`](../demo/style.css) | La interfaz de dibujo y comparación. |
 | [`demo/drawing.js`](../demo/drawing.js) | Entrada de mouse, táctil, lápiz y teclado. |
-| [`demo/assistance.js`](../demo/assistance.js) | Construye una recta entre extremos o suaviza el trazo dibujado. |
-| [`demo/simulation.js`](../demo/simulation.js) | El trazo de referencia, la entrada perturbada, el filtro causal y las métricas. |
-| [`demo/main.js`](../demo/main.js) | La reproducción, el gráfico y la tabla de resultados. |
-| [`demo/view.js`](../demo/view.js) | La visualización 3D y los dos ángulos del mecanismo. |
-| [`demo/simulation.test.js`](../demo/simulation.test.js) | Las pruebas de causalidad, métricas, repetibilidad y alcance del mecanismo. |
+| [`demo/assistance.js`](../demo/assistance.js) | Letra de ejemplo, lectura angular cuantizada con retardo, estimador causal y dos motores virtuales acotados. |
+| [`demo/simulation.js`](../demo/simulation.js) | Remuestreo, cinemática inversa, métricas y experimento avanzado de filtro. |
+| [`demo/main.js`](../demo/main.js) | Reproducción, gráficos, resultados y lecturas de cada muestra. |
+| [`demo/view.js`](../demo/view.js) | Mano conceptual y mecanismo de dos articulaciones en Three.js. |
+| [`demo/assistance.test.js`](../demo/assistance.test.js) y [`demo/simulation.test.js`](../demo/simulation.test.js) | Pruebas de causalidad, límites, precisión y repetibilidad. |
 
-En la demostración uso el dibujo sin agregarle perturbación. En el modo avanzado uso el trazo para sintetizar la entrada y medir el error. El filtro recibe solamente las posiciones de entrada. Los gráficos y el 3D comparten un índice de muestra. Aplico cinemática inversa al movimiento seleccionado para situar la punta del lápiz en 3D. Todo corre en el navegador. Si WebGL falla, puedo seguir usando el dibujo, el gráfico y la tabla. [Base teórica](BASE_TEORICA.md)
+Uso el mismo modelo planar en los cálculos y en el visor. La rama sin asistencia conserva el recorrido. La rama asistida aplica un desplazamiento angular limitado a cada articulación y usa cinemática directa para calcular la punta. La referencia de la L se usa para medir y graficar. El controlador recibe las lecturas del movimiento de entrada. Los gráficos y el 3D leen la misma muestra. [Base teórica](BASE_TEORICA.md)

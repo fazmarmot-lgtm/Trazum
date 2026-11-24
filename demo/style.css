@@ -99,8 +99,6 @@ body[data-mode=advanced] #intro .actions { display: none }
   .trace-card canvas { max-height: 220px; object-fit: contain }
 }
 
-.intent { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; padding: 0; margin: 0 0 12px; border: 0 }
-.intent legend { font-weight: 700; margin-bottom: 5px; padding: 0 }
-.intent label { justify-content: flex-start; gap: 8px; margin: 0; padding: 7px 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); cursor: pointer }
-.intent label:has(input:checked) { border-color: var(--blue); color: #fff }
-.intent input { width: 16px; height: 16px; margin: 0; accent-color: var(--blue) }
+.hardware { margin-top: 13px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: .9rem }
+.hardware summary { cursor: pointer }
+.hardware input { max-width: 28rem }

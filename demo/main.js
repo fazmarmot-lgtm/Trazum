@@ -1,6 +1,6 @@
 import './style.css';
 import { DURATION, DEFAULTS, SAMPLE_COUNT, simulate, summarize } from './simulation.js';
-import { EXAMPLE_STROKE, assistStroke } from './assistance.js';
+import { EXAMPLE, MODEL, simulateAssistance } from './assistance.js';
 import { createView } from './view.js';
 import { setupDrawing } from './drawing.js';
 import { english, localize, phrase } from './language.js';
@@ -11,6 +11,7 @@ const seek = byId('seek');
 const motion = byId('mode');
 const noise = byId('noise');
 const alpha = byId('alpha');
+const drive = byId('drive');
 const play = byId('play');
 const toggle = byId('toggle-mode');
 const steps = [...byId('steps').querySelectorAll('[data-step]')];
@@ -37,7 +38,6 @@ let stage = 'intro';
 let advanced = false;
 let samples;
 let reference;
-let intent = 'line';
 let frame = 0;
 let animation;
 let startedAt;
@@ -114,7 +114,18 @@ function render(index) {
   frame = index;
   seek.value = frame;
   byId('time').textContent = seconds.format(DURATION * frame / (SAMPLE_COUNT - 1)) + ' s';
-  if (!byId('visualization').hidden) view?.move(samples[frame], motion.value, frame);
+  const sample = samples[frame];
+  if (!byId('visualization').hidden) view?.move(sample, motion.value, frame);
+  if (!advanced && byId('hardware').open) {
+    const degrees = (value) => (value * 180 / Math.PI).toFixed(2) + '°';
+    const { measured, motor } = sample;
+    byId('hardware-readout').textContent = phrase(
+      'Ángulos leídos: ' + degrees(measured.shoulder) + ' / ' + degrees(measured.elbow) +
+      ' · Desplazamiento de motores: ' + degrees(motor.shoulder) + ' / ' + degrees(motor.elbow),
+      'Measured angles: ' + degrees(measured.shoulder) + ' / ' + degrees(measured.elbow) +
+      ' · Motor offsets: ' + degrees(motor.shoulder) + ' / ' + degrees(motor.elbow),
+    );
+  }
   drawPlots();
 }
 
@@ -124,29 +135,29 @@ function metric(kind, values) {
   }
 }
 
-function updateLabels(applied) {
-  const smoothed = applied === 'smooth';
+function updateLabels(hasTarget) {
+  const showChange = !hasTarget;
   byId('result-title').textContent = advanced
     ? phrase('Antes y después del filtro', 'Before and after filtering')
     : phrase('Trazo original y trazo asistido', 'Original and assisted stroke');
   byId('input-title').textContent = advanced
     ? phrase('Entrada con perturbación', 'Input with disturbance')
-    : reference ? phrase('Tu trazo', 'Your stroke') : phrase('Trazo de ejemplo', 'Example stroke');
+    : reference ? phrase('Tu trazo sin asistencia', 'Your stroke without assistance') : phrase('Letra L sin asistencia', 'Letter L without assistance');
   byId('output-title').textContent = advanced
     ? phrase('Salida filtrada', 'Filtered output')
-    : smoothed ? phrase('Curva suavizada', 'Smoothed curve') : phrase('Recta asistida', 'Assisted line');
-  byId('target-key').hidden = smoothed;
+    : phrase('Con asistencia de motores', 'With motor assistance');
+  byId('target-key').hidden = showChange;
   byId('target-key').textContent = advanced
     ? phrase('Verde punteado: trazo de referencia', 'Dashed green: reference stroke')
-    : phrase('Verde punteado: recta entre tus extremos', 'Dashed green: line between the endpoints');
-  byId('baseline-metrics').hidden = smoothed;
-  byId('output-rms-label').textContent = smoothed ? phrase('Cambio RMS', 'RMS change') : phrase('Error RMS', 'RMS error');
-  byId('output-peak-label').textContent = smoothed ? phrase('Cambio máximo', 'Maximum change') : phrase('Error máximo', 'Maximum error');
+    : phrase('Verde punteado: L de referencia del ejemplo', 'Dashed green: example reference L');
+  byId('baseline-metrics').hidden = showChange;
+  byId('output-rms-label').textContent = showChange ? phrase('Cambio RMS', 'RMS change') : phrase('Error RMS', 'RMS error');
+  byId('output-peak-label').textContent = showChange ? phrase('Cambio máximo', 'Maximum change') : phrase('Error máximo', 'Maximum error');
   motion.options[0].textContent = advanced ? phrase('Salida filtrada', 'Filtered output') : phrase('Trazo asistido', 'Assisted stroke');
   motion.options[1].textContent = advanced ? phrase('Entrada con perturbación', 'Input with disturbance') : phrase('Trazo original', 'Original stroke');
   byId('scope').textContent = advanced
     ? phrase('Prueba con ruido simulado y filtro causal. El filtro usa muestras actuales y anteriores.', 'Simulated disturbance and causal filter. The filter uses current and past samples.')
-    : phrase('Asistencia digital sobre el trazo. La mano 3D ilustra el mismo recorrido.', 'Digital stroke assistance. The 3D hand illustrates the same path.');
+    : phrase('Sensores y motores virtuales. La mano 3D ilustra el recorrido calculado.', 'Virtual sensors and motors. The 3D hand shows the computed path.');
 }
 
 function refresh() {
@@ -155,7 +166,7 @@ function refresh() {
   const result = byId('interpretation');
   if (advanced) {
     samples = simulate({ ...DEFAULTS, disturbance: +noise.value / 100, alpha: +alpha.value / 100 }, reference);
-    updateLabels('experiment');
+    updateLabels(true);
     byId('current-reference').textContent = reference
       ? phrase('Referencia de la prueba: tu trazo.', 'Test reference: your stroke.')
       : phrase('Referencia de la prueba: lazo de ejemplo.', 'Test reference: example loop.');
@@ -172,24 +183,29 @@ function refresh() {
       result.textContent = phrase('Mayor error RMS después del filtro en esta prueba.', 'Higher RMS error after filtering in this test.');
     }
   } else {
-    const assisted = assistStroke(reference ?? EXAMPLE_STROKE, intent);
-    samples = assisted.samples;
-    updateLabels(assisted.applied);
+    const input = reference ? reference.map((baseline) => ({ baseline, target: null })) : EXAMPLE;
+    samples = simulateAssistance(input, +drive.value / 100);
+    updateLabels(!reference);
+    byId('drive-value').textContent = drive.value + '%';
     byId('current-reference').textContent = reference
-      ? phrase('La entrada es el trazo que dibujaste.', 'The input is the stroke you drew.')
-      : phrase('Trazo de ejemplo para probar la ayuda.', 'Example stroke to try the assistance.');
-    if (assisted.applied === 'line') {
-      metric('baseline', assisted.displacement);
-      metric('filtered', summarize(samples, 'filtered'));
+      ? phrase('Comparo tu mismo movimiento con y sin asistencia.', 'I compare your same movement with and without assistance.')
+      : phrase('Ejemplo simulado de una L irregular.', 'Simulated example of a shaky L.');
+    if (reference) {
+      const comparison = samples.map((sample) => ({ ...sample, target: sample.baseline }));
+      metric('filtered', summarize(comparison, 'filtered'));
       result.textContent = phrase(
-        'La ayuda une el inicio y el final con una recta. El error mide la distancia a ese segmento.',
-        'Assistance joins the endpoints with a straight line. Error measures distance to that segment.',
+        'Los números muestran cuánto actuaron los motores sobre tu dibujo. Tu letra no tiene una plantilla.',
+        'The numbers show how much the motors changed your drawing. Your letter has no template.',
       );
     } else {
-      metric('filtered', assisted.displacement);
-      result.textContent = intent === 'line'
-        ? phrase('Los extremos están muy cerca. Suavicé la curva para conservar el trazo.', 'The endpoints are close together. I smoothed the curve to preserve the stroke.')
-        : phrase('La ayuda reduce los cambios bruscos. Los números miden cuánto cambió tu dibujo.', 'Assistance reduces abrupt changes. The numbers measure how much the drawing changed.');
+      const before = summarize(samples, 'baseline');
+      const after = summarize(samples, 'filtered');
+      metric('baseline', before);
+      metric('filtered', after);
+      result.textContent = phrase(
+        'El error mide la distancia a la L de referencia en cada instante. La asistencia deja parte de la irregularidad.',
+        'Error measures distance to the reference L at each time. Some irregularity remains after assistance.',
+      );
     }
   }
   project = fitTrace(samples);
@@ -202,7 +218,7 @@ function setStage(nextStage, focus) {
   document.body.dataset.stage = stage;
   document.body.dataset.mode = advanced ? 'advanced' : 'demo';
   byId('steps').hidden = advanced;
-  byId('intent-panel').hidden = advanced || (stage !== 'draw' && stage !== 'compare');
+  byId('hardware').hidden = advanced;
   byId('drawing').hidden = !advanced && stage !== 'draw';
   byId('results').hidden = !advanced && stage !== 'compare' && stage !== 'intro';
   byId('visualization').hidden = !advanced && stage !== 'visualize';
@@ -283,18 +299,25 @@ play.addEventListener('click', () => {
 seek.addEventListener('input', () => { pause(); render(+seek.value); });
 motion.addEventListener('change', () => render(frame));
 for (const input of [noise, alpha]) input.addEventListener('input', refresh);
-for (const option of document.querySelectorAll('[name="intent"]')) {
-  option.addEventListener('change', () => {
-    intent = option.value;
-    refresh();
-  });
-}
+drive.addEventListener('input', refresh);
+const hardware = byId('hardware');
+const sampleRate = (SAMPLE_COUNT - 1) / DURATION;
+const delay = Math.round(1000 * MODEL.sensorDelaySamples / sampleRate);
+const motorTime = 1000 * MODEL.motorTau;
+byId('hardware-config').textContent = phrase(
+  'Sensores de ' + MODEL.encoderBits + ' bits a ' + sampleRate + ' Hz · Retardo supuesto: ' + delay +
+  ' ms · Constante de respuesta del motor: ' + motorTime + ' ms.',
+  MODEL.encoderBits + '-bit sensors at ' + sampleRate + ' Hz · Assumed delay: ' + delay +
+  ' ms · Motor response time constant: ' + motorTime + ' ms.',
+);
+hardware.addEventListener('toggle', () => render(frame));
 byId('reset').addEventListener('click', () => {
   pause();
   frame = 0;
   motion.value = 'filtered';
   noise.value = DEFAULTS.disturbance * 100;
   alpha.value = DEFAULTS.alpha * 100;
+  drive.value = 100;
   if (!advanced) {
     reference = undefined;
     drawing.reset();

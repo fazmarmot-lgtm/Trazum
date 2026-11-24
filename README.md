@@ -12,7 +12,7 @@ Soy Lautaro Verón. Empecé Trazum como estudiante, a los 15 años. Mi objetivo 
 
 ## Qué preparé para que lo puedas probar
 
-En **Iniciar demostración** podés dibujar y elegir **Una recta** o **Una curva más suave**. Aplico la ayuda sobre tu dibujo terminado y comparo los dos recorridos en 2D y 3D. También dejé un ejemplo irregular para probarlo. En **Modo avanzado** incluí el gráfico superpuesto, el mecanismo de dos articulaciones y los controles de cámara, perturbación y filtrado.
+En **Probar la letra L** podés comparar el movimiento con y sin asistencia de motores virtuales. Simulo sensores de ángulo cuantizados y motores con retardo de respuesta y límites. También podés probar tu propia letra de un trazo. En **Modo avanzado** incluí el gráfico superpuesto, el mecanismo de dos articulaciones y los controles de cámara, perturbación y filtrado.
 
 En el modo avanzado puedo generar una entrada con perturbación y evaluar un filtro que solo recibe muestras actuales y anteriores. [Base teórica](docs/BASE_TEORICA.md) · [Arquitectura](docs/ARQUITECTURA.md)
 
@@ -39,6 +39,7 @@ npm run preview
 
 | Evidencia | Resultado | Alcance |
 | --- | --- | --- |
+| Letra L simulada | Error RMS de 0,045 sin asistencia y 0,034 con asistencia. | Sensores y motores virtuales. |
 | Experimento del modo avanzado | 121 muestras reproducibles. Con los valores iniciales, el error RMS es 0,114 para la entrada y 0,104 con el filtro. | Caso sintético con trayectoria conocida. |
 | Índice impreso | Armé y flexioné a mano un índice de seis piezas en mesa. | Observación cualitativa de una unidad. |
 | Auditorías digitales | Revisé 192 configuraciones del índice y 45 posturas de la mano compacta sin encontrar interferencias en esas muestras. | Los informes coinciden con las mallas de esas revisiones. |

@@ -1,57 +1,64 @@
-import { SAMPLE_COUNT, resampleTrace } from './simulation.js';
+import { DURATION, SAMPLE_COUNT, jointAngles } from './simulation.js';
 
-export const EXAMPLE_STROKE = resampleTrace(Array.from({ length: SAMPLE_COUNT }, (_, index) => {
+export const LINKS = Object.freeze({ upper: 2.18, lower: 1.77 });
+export const MODEL = Object.freeze({
+  encoderBits: 12,
+  sensorDelaySamples: 1,
+  estimationTau: 0.07,
+  motorTau: 0.045,
+  maxMotorAngle: 0.06,
+  maxMotorRate: 0.7,
+});
+const DT = DURATION / (SAMPLE_COUNT - 1);
+const ENCODER_STEP = 2 * Math.PI / 2 ** MODEL.encoderBits;
+const estimateWeight = 1 - Math.exp(-DT / MODEL.estimationTau);
+const motorWeight = 1 - Math.exp(-DT / MODEL.motorTau);
+const axes = ['shoulder', 'elbow'];
+const clamp = (value, limit) => Math.max(-limit, Math.min(limit, value));
+
+export const EXAMPLE = Array.from({ length: SAMPLE_COUNT }, (_, index) => {
   const progress = index / (SAMPLE_COUNT - 1);
-  return {
-    x: 2.08 + 0.93 * progress,
-    y: 0.78 + 0.13 * Math.sin(5 * Math.PI * progress) + 0.04 * Math.sin(27 * Math.PI * progress),
-  };
-}));
+  const bend = 0.57;
+  const vertical = progress < bend;
+  const local = vertical ? progress / bend : (progress - bend) / (1 - bend);
+  const target = vertical
+    ? { x: 2.35, y: 1.47 - 0.87 * local }
+    : { x: 2.35 + 0.72 * local, y: 0.60 };
+  const wobble = 0.072 * Math.sin(2 * Math.PI * 7 * progress) * Math.min(1, 6 * local, 6 * (1 - local));
+  const baseline = vertical
+    ? { x: target.x + wobble, y: target.y }
+    : { x: target.x, y: target.y + wobble };
+  return { target, baseline };
+});
 
-function smoothStroke(points) {
-  let current = points;
-  for (let pass = 0; pass < 4; pass++) {
-    current = current.map((point, index) => {
-      if (index === 0 || index === current.length - 1) return point;
-      const before = current[Math.max(0, index - 3)];
-      const after = current[Math.min(current.length - 1, index + 3)];
-      return {
-        x: (before.x + 2 * point.x + after.x) / 4,
-        y: (before.y + 2 * point.y + after.y) / 4,
-      };
-    });
-  }
-  return current;
+function position({ shoulder, elbow }) {
+  const { upper, lower } = LINKS;
+  return {
+    x: upper * Math.cos(shoulder) + lower * Math.cos(shoulder + elbow),
+    y: upper * Math.sin(shoulder) + lower * Math.sin(shoulder + elbow),
+  };
 }
 
-export function assistStroke(points, intent) {
-  const first = points[0];
-  const last = points.at(-1);
-  const dx = last.x - first.x;
-  const dy = last.y - first.y;
-  const span = Math.max(...points.map((point) => Math.hypot(point.x - first.x, point.y - first.y)));
-  const applied = intent === 'line' && Math.hypot(dx, dy) > 0.10 * span ? 'line' : 'smooth';
-  const smoothed = applied === 'smooth' ? smoothStroke(points) : undefined;
-  const samples = points.map((baseline, index) => {
-    if (smoothed) return { baseline, filtered: smoothed[index], target: null };
-    const progress = index / (points.length - 1);
-    const target = index === points.length - 1
-      ? last
-      : { x: first.x + dx * progress, y: first.y + dy * progress };
-    return { baseline, filtered: target, target };
+export function simulateAssistance(input, gain = 1) {
+  const unassisted = input.map(({ baseline }) => jointAngles(baseline, LINKS.upper, LINKS.lower));
+  const estimate = { shoulder: 0, elbow: 0 };
+  const motor = { shoulder: 0, elbow: 0 };
+  return input.map(({ baseline, target }, index) => {
+    const sensed = unassisted[Math.max(0, index - MODEL.sensorDelaySamples)];
+    const measured = {};
+    const assisted = {};
+    const command = {};
+    for (const axis of axes) {
+      measured[axis] = Math.round(sensed[axis] / ENCODER_STEP) * ENCODER_STEP;
+      estimate[axis] = index === 0 ? measured[axis]
+        : estimate[axis] + estimateWeight * (measured[axis] - estimate[axis]);
+      command[axis] = clamp(gain * (estimate[axis] - measured[axis]), MODEL.maxMotorAngle);
+      const step = clamp(motorWeight * (command[axis] - motor[axis]), MODEL.maxMotorRate * DT);
+      motor[axis] += step;
+      assisted[axis] = unassisted[index][axis] + motor[axis];
+    }
+    // With no motor displacement, retain the input exactly.
+    const filtered = motor.shoulder === 0 && motor.elbow === 0 ? baseline : position(assisted);
+    return { baseline, target, filtered, measured, command, motor: { ...motor } };
   });
-  const distances = samples.map(({ baseline, filtered }) => {
-    if (applied === 'smooth') return Math.hypot(filtered.x - baseline.x, filtered.y - baseline.y);
-    const position = ((baseline.x - first.x) * dx + (baseline.y - first.y) * dy) / (dx * dx + dy * dy);
-    const along = Math.max(0, Math.min(1, position));
-    return Math.hypot(baseline.x - (first.x + along * dx), baseline.y - (first.y + along * dy));
-  });
-  return {
-    samples,
-    applied,
-    displacement: {
-      rms: Math.sqrt(distances.reduce((sum, distance) => sum + distance ** 2, 0) / distances.length),
-      peak: Math.max(...distances),
-    },
-  };
 }

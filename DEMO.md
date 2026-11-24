@@ -1,21 +1,16 @@
 # Cómo muestro Trazum
 
-## Modo demostración
+1. Abro el [simulador](README.md#ejecutarlo-en-tu-equipo) y elijo **Probar la letra L**. A la izquierda veo el mismo movimiento sin asistencia, y a la derecha, con motores virtuales. La L punteada sirve para medir el error de este ejemplo.
+2. Muestro el RMS, que pasa de **0,045 a 0,034**, y el máximo, que pasa de **0,072 a 0,050** unidades virtuales en esta simulación. La letra conserva parte de las irregularidades.
+3. En **Sensores y motores · modelo virtual** se ven las lecturas de ángulo y cuánto corrigió cada motor en el punto de la reproducción. Bajo el nivel de asistencia a cero si quiero comprobar que las dos trayectorias coinciden.
+4. Entro en **Ver en 3D**. El lápiz de la mano conceptual sigue la trayectoria calculada. También puedo volver y dibujar mi propia letra de un solo trazo. Para un dibujo propio, los números muestran cuánto se movió el recorrido, porque no tengo una letra ideal con la cual compararlo.
 
-1. En **Iniciar demostración**, elijo si quiero una recta o una curva más suave, dibujo un trazo continuo y pulso **Aplicar ayuda**. Puedo usar el trazo de ejemplo desde ahí o con **Probar el ejemplo** en la portada. Con teclado, uso las flechas y Espacio para marcar puntos.
-2. En **Comparar**, muestro la entrada en naranja y la salida filtrada en azul. Ambas se animan con el mismo reloj y la misma escala. Al elegir recta, comparo el dibujo con el segmento entre su inicio y su final. Al suavizar una curva, mido cuánto cambió el dibujo. Los valores se calculan sobre 121 muestras en unidades virtuales.
-3. Elijo **Ver en 3D**. La punta del lápiz sigue la trayectoria seleccionada original o asistida. La mano es conceptual. El reloj de reproducción sigue siendo el mismo. Puedo pausar, moverme a un momento del trazo o volver a la comparación.
+## Experimento avanzado
 
-La ayuda actúa sobre el dibujo terminado. En la opción recta, el error después de asistir es cero por construcción porque la salida sigue el segmento elegido. [Base teórica](docs/BASE_TEORICA.md)
+En **Modo avanzado** conservo otro ensayo reproducible. Comparo una señal con perturbación lateral con la salida de un filtro exponencial. Ahí puedo ajustar la perturbación y el peso de la muestra. [Base teórica](docs/BASE_TEORICA.md)
 
-## Modo avanzado
+## Prototipo y video
 
-Abro **Modo avanzado** para conservar el lienzo, la comparación superpuesta, la visualización del mecanismo de dos articulaciones, la cámara y los ajustes de perturbación y peso de filtrado. Con el lazo de ejemplo obtuve un RMS de **0,114 a 0,104**. Como control, bajo la perturbación a cero. Con α = 35 %, el filtro introduce atraso y el RMS pasa de **0,000 a 0,068**. Al llevar α a 100 %, la salida reproduce la entrada.
+Imprimí y moví un índice a mano en mesa. La prueba de la L usa sensores y motores virtuales. Me falta medir el comportamiento de los componentes reales. [Galería](media/README.md) · [Cronología](docs/DESARROLLO.md)
 
-## Qué muestro del prototipo físico
-
-Imprimí y probé un índice sobre una mesa. Puedo mostrar cómo se flexiona a mano y explicar qué me falta medir. [Galería del índice](media/README.md) · [Qué comprobé en CAD y en mesa](docs/DESARROLLO.md)
-
-## Video
-
-Para una toma de 16:9 puedo mostrar primero **Probar el ejemplo**, seguir con el 3D y después dibujar un trazo propio desde **Reiniciar demo**. En **English** puedo cambiar el idioma de la interfaz. Voy a sumar el enlace cuando termine de grabarlo. [Reglas de STEM2Connect](https://stem2connect-online-hackathon.devpost.com/rules)
+Voy a sumar el enlace cuando termine el video. [Reglas de STEM2Connect](https://stem2connect-online-hackathon.devpost.com/rules)

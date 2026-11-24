@@ -12,7 +12,7 @@ I'm Lautaro Verón. I started Trazum as a student at age 15. My long-term goal i
 
 ## What I built for you to try
 
-Choose **English**, then **Start demonstration** to draw a stroke and select **A straight line** or **A smoother curve**. I apply the selected assistance after you finish drawing and show both paths in 2D and 3D. I also included a shaky example stroke. In **Advanced mode** I kept the overlay plot, two-joint mechanism, camera controls, disturbance, and filtering settings.
+Choose **English**, then **Try the letter L** to compare movement with and without virtual motor assistance. I simulate quantized angle sensors and motors with a finite response and travel limits. You can also draw a one-stroke letter. In **Advanced mode** I kept the overlay plot, two-joint mechanism, camera controls, disturbance, and filtering settings.
 
 In advanced mode I can add simulated disturbance and evaluate a filter that uses current and past input samples. [Theory](docs/BASE_TEORICA.md) · [Architecture](docs/ARQUITECTURA.md)
 
@@ -39,6 +39,7 @@ npm run preview
 
 | Evidence | Result | Scope |
 | --- | --- | --- |
+| Simulated letter L | RMS error of 0.045 without assistance and 0.034 with assistance. | Virtual sensors and motors. |
 | Advanced experiment | 121 reproducible samples. Default RMS error is 0.114 for the input and 0.104 after filtering. | Synthetic case with a known target. |
 | Printed index finger | I assembled and flexed a six-piece prototype by hand on a bench. | Qualitative observation of one unit. |
 | Digital audits | I checked 192 index configurations and 45 full-hand poses. I found no interferences in those samples. | The reports match the meshes for the audited revisions. |

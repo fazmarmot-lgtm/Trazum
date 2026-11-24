@@ -1,12 +1,19 @@
 # Cómo comparo la ayuda sobre un trazo y pruebo el filtro
 
-## Ayuda sobre el dibujo terminado
+## Prueba de asistencia sobre una letra
 
-En la demostración uso los puntos que dibujé, con la misma escala horizontal y vertical. Los reparto por distancia para la reproducción. Si elijo recta, construyo un segmento entre el primer y el último punto. Mido la distancia geométrica de cada muestra al segmento, con independencia de su posición en la reproducción. La salida cae sobre ese segmento por construcción.
+Uso una L de un solo trazo. En el ejemplo conozco la referencia porque generé una L irregular a partir de ella. Si uso un dibujo propio, reporto la diferencia entre el recorrido original y el asistido. Procesar una letra después de dibujarla todavía es una prueba de software. El cálculo por muestra es causal.
 
-Si elijo suavizar, aplico cuatro pasadas de promedio local ponderado. Cada pasada combina una muestra (peso 2/4) con sus vecinas a tres posiciones de distancia (1/4 cada una) y conserva inicio y final. Si los extremos están demasiado cerca para definir una recta útil, uso este método e indico el cambio en pantalla. Para una curva reporto el desplazamiento entre el dibujo y la salida, ya que no dispongo de un trazo ideal.
+Con dos articulaciones planas convierto la posición sin asistencia en dos ángulos. Simulo dos sensores absolutos que entregan lecturas cuantizadas a 12 bits. Leo una muestra anterior, a 30 Hz, para representar unos 33 ms de retardo. Los sensores de ángulo comerciales pueden entregar lecturas cuantizadas, como en el AS5600. La resolución es una referencia. La frecuencia y el retardo son supuestos del simulador. [Ficha técnica del AS5600](https://prod-parts-data.s3.amazonaws.com/AS5600-ASOT/datasheet/1_AS5600-ASOT-Osram-datasheet-116051199.pdf)
 
-Esta demostración procesa el dibujo después de que la persona termina el trazo. El modo avanzado es el experimento causal descrito abajo.
+En cada eje estimo una tendencia a partir de la lectura actual y el estado anterior, con una constante de 70 ms. Uso la diferencia entre la estimación y la lectura como comando de corrección. Acoto el comando a 0,06 rad por eje. El desplazamiento del motor se acerca a ese comando con una respuesta de primer orden de 45 ms y una velocidad máxima de 0,7 rad/s. Sumo ese desplazamiento al ángulo del movimiento de entrada y calculo la punta con cinemática directa. Uso el primer orden como aproximación de la respuesta del conjunto motor-controlador. El modelo trata movimiento voluntario y asistencia como señales aditivas. [Respuesta temporal de un motor DC, University of Michigan](https://ctms.engin.umich.edu/CTMS/index.php?aux=Activities_DCmotorA)
+
+| L simulada | Error RMS | Error máximo |
+| --- | ---: | ---: |
+| Sin asistencia | 0,045 | 0,072 |
+| Con asistencia | 0,034 | 0,050 |
+
+Los valores se calculan en unidades virtuales en las mismas muestras. El controlador usa las lecturas angulares del movimiento sin asistencia. La referencia de la L queda para calcular el error. En este escenario el modelo reduce parte de la irregularidad. En otros trazos el retardo puede cambiar cuánto ayuda o empeorar un giro. Todavía me falta identificar la latencia, el rango y la respuesta reales, y medir fricción, carga, holgura y acoplamiento con la mano.
 
 ## Pregunta del experimento avanzado
 
